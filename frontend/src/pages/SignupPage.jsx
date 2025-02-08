@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header'; // Import the Header component
 import './signuppage.css';
 
 const SignupPage = () => {
@@ -17,7 +16,6 @@ const SignupPage = () => {
 
   return (
     <>
-      <Header /> {/* Add the Header component */}
       <div className="main-content">
         <div className="form-container">
           <h1>Sign Up</h1>

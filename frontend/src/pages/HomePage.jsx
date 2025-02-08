@@ -1,12 +1,9 @@
 import React from 'react';
-import Header from '../components/Header';
 import './HomePage.css';
 
 const HomePage = () => {
   return (
     <div>
-      <Header />
-      {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
           <h1 className="hero-title">Finance Friend</h1>

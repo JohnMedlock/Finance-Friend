@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import beautiful from '../assets/beautiful.jpg';
-import Header from '../components/Header';
 import './ProfilePage.css';
 
 
@@ -23,7 +22,6 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-page">
-        <Header />
         <div className="banner-background">
         </div>
         

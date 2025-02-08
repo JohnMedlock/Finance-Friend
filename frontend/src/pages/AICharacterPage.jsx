@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
 import './AICharacterPage.css';
 
 const AICharacterPage = () => {
@@ -51,7 +50,6 @@ const AICharacterPage = () => {
 
   return (
     <div className="ai-character-page">
-      <Header />
       <div className="ai-character-container">
         <h1>Customize Your AI Character</h1>
         <form onSubmit={handleSubmit} className="ai-character-form">
