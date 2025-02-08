@@ -1,17 +1,16 @@
 import React from 'react';
+import beautiful from '../assets/beautiful.jpg';
 import Header from '../components/Header';
 import './ProfilePage.css';
-import beautiful from '../assets/beautiful.jpg';
 
 const array = ['Apple', 'Banana', 'Cherry', 'Date'];
 
-// Create a string where each element is a hyperlink, separated by commas
 const result = array.map((item, index) => (
-    <span key={item}>
-      <a href={`https://example.com/${item.toLowerCase()}`}>{item}</a>
-      {index < array.length - 1 && ', '}
-    </span>
-  ));
+  <span key={item}>
+    <a href={`https://example.com/${item.toLowerCase()}`}>{item}</a>
+    {index < array.length - 1 && ', '}
+  </span>
+));
 
 const ProfilePage = () => {
   return (
@@ -31,6 +30,7 @@ const ProfilePage = () => {
                 </div>
             </div>
         </div>
+      </div>
     </div>
   );
 };

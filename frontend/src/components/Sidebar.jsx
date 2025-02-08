@@ -11,13 +11,13 @@ const Sidebar = () => {
       <div className="chat-log">
         <h2>Chat Log</h2>
         <div className="messages">
-          {/* Example messages */}
           <p>User1: Hello!</p>
           <p>User2: Hi there!</p>
         </div>
       </div>
       <div className="chat-input">
         <textarea placeholder="Type your message here..."></textarea>
+        <button className="send-button">Send</button>
       </div>
     </div>
   );
