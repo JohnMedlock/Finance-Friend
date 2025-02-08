@@ -42,7 +42,7 @@ const createModel = async () => {
   } catch (error) {
     console.error('Error adding model:', error.response?.data || error.message);
   } // try
-} // addModel
+} // createModel
 
 // Get a model by email and model name
 const getModel = async () => {
@@ -84,13 +84,78 @@ const deleteUser = async () => {
   }
 };
 
+// Create a chart container
+const createChartContainer = async () => {
+  try {
+    const response = await axios.post(`${API_URL}/charts/add`, { 
+      email: 'john@example.com', 
+      chart1: {
+        value1: 2, 
+        value2: 4
+      },
+      chart2: "c2",
+      chart3: "c3",
+      chart4: "c4"
+    });
+    console.log('Model chart container:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error adding chart container:', error.response?.data || error.message);
+  } // try
+} // createModel
+
+// Update a chart container by email
+const updateChartContainer = async () => {  
+  try {
+    const email = 'john@example.com';
+    const response = await axios.post(`${API_URL}/charts/update`, { 
+      email: 'john@example.com', 
+      chart1: {
+        value1: 6, 
+        value2: 8
+      },
+      chart2: "c22",
+      chart3: "c33",
+      chart4: "c44"
+    });
+    console.log('Chart Container Retrieved:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving chart container:', error.response?.data || error.message);
+  } // try
+} // updateChartContainer
+
+// Get a chart container by email
+const getChartContainer = async () => {
+  try {
+    const email = 'john@example.com';
+    const response = await axios.get(`${API_URL}/charts/get?email=${email}`);
+    console.log('Chart Container Retrieved:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving chart container:', error.response?.data || error.message);
+  } // try
+} // getModel
 
 // Run the functions to test the API routes
 (async () => {
     await createUser()
     await getUser();
+    
+    console.log("==================================================================================")
+    
     await createModel();
     await getModel();
+
+    console.log("==================================================================================")
+    
+    await createChartContainer();
+    await getChartContainer();
+    await updateChartContainer();
+    await getChartContainer();
+
+    console.log("==================================================================================")
+
     await updateUser();
-    await deleteUser();
+    // await deleteUser();
 })();

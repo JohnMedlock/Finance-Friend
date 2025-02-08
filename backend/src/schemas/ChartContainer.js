@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 // TODO: update when needed
 const chartContainerSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
     chart1: {
       value1: {
         type: Number,

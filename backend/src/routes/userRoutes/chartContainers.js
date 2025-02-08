@@ -15,11 +15,14 @@ router.post('/add', async (req, res) => {
 
         const uid = user._id;
         const newContainer = new ChartContainer({
-            uid,
-            chart1,
-            chart2,
-            chart3,
-            chart4
+            userId: uid,
+            chart1: {
+                value1: chart1.value1,
+                value2: chart1.value2,
+            },
+            chart2: chart2,
+            chart3: chart3,
+            chart4: chart4
         });
 
         await newContainer.save();
@@ -30,9 +33,9 @@ router.post('/add', async (req, res) => {
     } // try
 }); // addChartContainer
 
-router.get('/get/:email', async (req, res) => {
+router.get('/get', async (req, res) => {
     try {
-        const email = req.params.email;
+        const email = req.query.email;
         const user = await User.findOne({ email: email });
 
         if (!user) {
@@ -54,23 +57,21 @@ router.get('/get/:email', async (req, res) => {
 router.post('/update', async (req, res) => {
     try {
         const { email, chart1, chart2, chart3, chart4 } = req.body;
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(404).json({ message: "No user found." });
-        } // if
-
-        const uid = user._id;
+        }
 
         const updatedContainer = await ChartContainer.findOneAndUpdate(
-            { uid },
+            { userId: user._id },
             { chart1, chart2, chart3, chart4 },
             { new: true, runValidators: true }
         );
 
         if (!updatedContainer) {
             return res.status(404).json({ message: "No container found." });
-        } // if
+        }
 
         res.status(200).json(updatedContainer);
     } catch (error) {
