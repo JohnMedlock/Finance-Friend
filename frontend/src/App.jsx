@@ -19,7 +19,22 @@ function App() {
     }
   }, [isLoading]);
 
-  if (isLoading) {
+  useEffect(() => {
+    const fetchToken = async () => {
+      if (isAuthenticated) {
+        try {
+          const token = await getAccessTokenSilently();
+          console.log("JWT Token:", token);
+        } catch (error) {
+          console.error("Error fetching token:", error);
+        }
+      }
+    };
+
+    fetchToken();
+  }, [isAuthenticated, getAccessTokenSilently]);
+
+  if (loading) {
     return <Loading />;
   }
 
@@ -30,16 +45,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? (
-              <HomePage />
-            ) : (
-              <button onClick={() => loginWithRedirect()}>Login</button>
-            )
-          }
-        />
+        <Route path="/" element={<HomePage />} />
         <Route
           path="/dashboard"
           element={
