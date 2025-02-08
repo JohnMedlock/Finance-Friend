@@ -32,7 +32,7 @@ const getUser = async () => {
 // Create a model
 const createModel = async () => {
   try {
-    const response = await axios.post(`${API_URL}/add-model`, { 
+    const response = await axios.post(`${API_URL}/models/add`, { 
       email: 'john@example.com', 
       modelName: 'abcde', 
       link: 'https://www.example.com' 
@@ -50,7 +50,7 @@ const getModel = async () => {
     const email = 'john@example.com';
     const modelName = 'abcde';
     // Use query parameters instead of URL path
-    const response = await axios.get(`${API_URL}/get-model?email=${email}&modelName=${modelName}`);
+    const response = await axios.get(`${API_URL}/models/get?email=${email}&modelName=${modelName}`);
     console.log('Model Retrieved:', response.data);
     return response.data;
   } catch (error) {
