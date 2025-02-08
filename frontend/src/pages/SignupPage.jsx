@@ -20,7 +20,7 @@ const SignupPage = () => {
       <Header /> {/* Add the Header component */}
       <div className="main-content">
         <div className="form-container">
-          <h2>Sign Up</h2>
+          <h1>Sign Up</h1>
           <form onSubmit={handleSignup}>
             <div>
               <label>Email:</label>
@@ -29,6 +29,7 @@ const SignupPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                placeholder="Enter your email"
               />
             </div>
             <div>
@@ -38,9 +39,11 @@ const SignupPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                placeholder="Enter your password"
               />
             </div>
             <button type="submit">Sign Up</button>
+            <p className="sign-up-callout">Already have an account? <a href="/#/login">Log In!</a></p>
           </form>
         </div>
       </div>

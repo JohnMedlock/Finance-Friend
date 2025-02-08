@@ -1,5 +1,6 @@
 import React from 'react';
 import './Dashboard.css';
+import PieChart from './PieChart';
 
 const Dashboard = () => {
   return (
@@ -16,7 +17,7 @@ const Dashboard = () => {
           </div>
           <div className="card">
             <h2>Investments</h2>
-            <p>$5,000</p>
+            <PieChart />
           </div>
         </div>
       </div>
