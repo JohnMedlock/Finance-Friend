@@ -1,54 +1,62 @@
 import express from 'express';
 import { auth } from 'express-openid-connect';
-import { generateToken } from '../auth/authUtils.js';
+import { generateToken } from '../auth/authUtils.js'
+import bcrypt from 'bcryptjs'
+import User from '../schemas/User.js'
 
 const router = express.Router();
 
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret:
-    process.env.AUTH0_SECRET ||
-    'a_very_long_default_secret_string_at_least_32_chars',
-  baseURL: process.env.BASE_URL,
-  clientID: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  issuerBaseURL: process.env.ISSUER_BASE_URL,
-  authorizationParams: {
-    response_type: 'code',
-    scope: 'openid profile email',
-  },
-};
+// Register a new user
+router.post('/register', async (req, res) => {
+  try {
+    const { name, email, password, picture } = req.body;
 
-router.use(auth(config));
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+    } // if
 
-router.get('/', (req, res) => {
-  if (!req.oidc.isAuthenticated()) {
-    return res.json({ isLoggedIn: false, user: null });
+    const newUser = new User({ 
+      name, 
+      email, 
+      password, 
+      picture,
+      updatedAt: new Date()
+    });
+
+    await newUser.save();
+
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-
-  const token = generateToken(req.oidc.user);
-  res.json({
-    isLoggedIn: true,
-    user: req.oidc.user,
-    jwt: token,
-  });
 });
 
-router.get('/login', (req, res) => {
-  res.redirect('/');
+// Login user
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    } // if
+    
+    // Compare provided password with hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    } // if
+
+
+    const token = generateToken(user);
+
+    res.json({ isLoggedIn: true, user, jwt: token });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  } // try
 });
 
-router.get('/callback', (req, res) => {
-  if (!req.oidc.isAuthenticated()) {
-    return res.status(401).json({ error: 'Authentication failed.' });
-  }
-
-  const token = generateToken(req.oidc.user);
-  res.json({
-    user: req.oidc.user,
-    jwt: token,
-  });
-});
 
 export default router;
