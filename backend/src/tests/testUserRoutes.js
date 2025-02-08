@@ -3,6 +3,45 @@ import axios from 'axios';
 // URL of the running API
 const API_URL = 'http://localhost:3000/api/users';
 
+
+const register = async (name, email, password, picture) => {
+  try {
+    // Send a POST request to create a new user
+    const response = await axios.post('http://localhost:3000/register', {
+      name: name,
+      email: email,
+      password: password,
+      picture: picture
+    });
+
+    // Check if the user was created successfully
+    console.log('User created successfully!');
+    console.log('User details:', response.data);
+  } catch (error) {
+    console.error('Error creating user:', error.response?.data || error);
+  }
+};
+
+const login = async (email, password) => {
+  try {
+    // Send a POST request to the login endpoint
+    const response = await axios.post('http://localhost:3000/login', {
+      email: email,
+      password: password,
+    });
+
+    // Check if the login was successful
+    if (response.data.jwt) {
+      console.log('Login successful!');
+      console.log('JWT Token:', response.data.jwt);
+    } else {
+      console.log('Login failed:', response.data.message || response.data.error);
+    }
+  } catch (error) {
+    console.error('Error logging in:', error.response?.data || error.message);
+  }
+};
+
 // Create a new user
 const createUser = async () => {
   try {
@@ -139,23 +178,27 @@ const getChartContainer = async () => {
 
 // Run the functions to test the API routes
 (async () => {
-    await createUser()
-    await getUser();
+    await register('John Doe', 'john@example.com', 'password123', 'picture.com');
+    //await login('john2@example.com', 'password123');
+    //await login('john2@example.com', '22');
+    await login('john@example.com', 'password123');
+    //await createUser()
+    //await getUser();
     
     console.log("==================================================================================")
     
-    await createModel();
-    await getModel();
+    //await createModel();
+    //await getModel();
 
     console.log("==================================================================================")
     
-    await createChartContainer();
-    await getChartContainer();
-    await updateChartContainer();
-    await getChartContainer();
+    //await createChartContainer();
+    //await getChartContainer();
+    //await updateChartContainer();
+    //await getChartContainer();
 
     console.log("==================================================================================")
 
-    await updateUser();
+    // await updateUser();
     // await deleteUser();
 })();
