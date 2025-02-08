@@ -13,11 +13,11 @@ const URI = process.env.MONGO_URI || "";
 
 app.use(express.json())
 app.use('/', publicRoutes)
-app.use('/api', authenticateToken, protectedRoutes)
+// app.use('/api', authenticateToken, protectedRoutes)
+app.use('/api', protectedRoutes)
 
 await mongoose.connect(URI);
 console.log("Mongoose connected.");
-
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

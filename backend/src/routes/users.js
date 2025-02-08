@@ -4,13 +4,13 @@ import Model from '../schemas/Model.js'
 
 const router = express.Router()
 
-router.get('/add', async (req, res) => {
+router.post('/add', async (req, res) => {
   try {
     const { name, email, updatedAt, picture } = req.body;
     const newUser = new User ({ name, email, updatedAt, picture });
 
-    const existingUser = await User.findOne({ email: newUser.email });
-
+    const existingUser = await User.findOne({ email: newUser.email });    
+    
     if (existingUser) {
       res.status(500).json({ message: "User with this email already exists.", user: existingUser });
       return;
@@ -24,10 +24,11 @@ router.get('/add', async (req, res) => {
   } // try
 }); // addUser
 
-router.get('/get', async (req, res) => {
+router.get('/get/:email', async (req, res) => {
   try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
+    const email = req.params.email;
+    
+    const user = await User.findOne({ email: email });
 
     if (!user) {
       res.status(404).json({ message: "No user found." });
@@ -36,11 +37,11 @@ router.get('/get', async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: error  });
+    res.status(500).json(error);
   } // try
 }); // getUser
 
-router.get('/update', async (req, res) => {
+router.post('/update', async (req, res) => {
   try {
     const { email, name, updatedAt, picture } = req.body;
 
@@ -60,10 +61,10 @@ router.get('/update', async (req, res) => {
     } // try
   }); // updateUser
 
-router.get('/delete', async (req, res) => {
+router.get('/delete/:email', async (req, res) => {
   try {
-    const { email } = req.body;
-    const deletedUser = await User.findOneAndDelete({ email });
+    const email = req.params.email;
+    const deletedUser = await User.findOneAndDelete({ email: email });
 
     if (!deletedUser) {
       return res.status(404).json({ message: "No user found." });
@@ -75,7 +76,7 @@ router.get('/delete', async (req, res) => {
   } // try
 }); // deleteUser
 
-router.get('/add-model', async (req, res) => {
+router.post('/add-model', async (req, res) => {
   try {
     const { email, modelName, link } = req.body;
     const user = await User.findOne({ email });
@@ -83,7 +84,7 @@ router.get('/add-model', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "No user found." });
     } // if
-    
+
     const uid = user._id;
     const newModel = new Model ({ userId: uid, modelName: modelName, link: link });
 
@@ -97,9 +98,15 @@ router.get('/add-model', async (req, res) => {
 
 router.get('/get-model', async (req, res) => {
   try {
-    const { email, modelName } = req.body;
-    const model = await User.findOne({ email: email, modelName: modelName });
+    const { email, modelName } = req.query;
+    const user = await User.findOne({ email: email });
 
+    if (!user) {
+      return res.status(404).json({ message: "No user found." });
+    } // if
+
+    const model = await Model.findOne({ userId: user._id, modelName: modelName });
+    
     if (!model) {
       return res.status(404).json({ message: "No model found." });
     } // if
