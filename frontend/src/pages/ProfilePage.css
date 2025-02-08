@@ -1,17 +1,49 @@
 .profile-container {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    align-items: center;
     justify-content: space-evenly;
-}
-
-.pfp {
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+  
+  .pfp {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     margin-right: 20px;
-}
-
-.profile-vert-hr {
-    width: 0;
-}
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-vert-hr {
+    height: 200px;
+    border: 1px solid var(--primary-color);
+    margin: 0 20px;
+  }
+  
+  .profile-info-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .profile-info-section h1 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+  }
+  
+  .profile-info-section p {
+    margin: 5px 0;
+  }
+  
+  .profile-info-section a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  .profile-info-section a:hover {
+    text-decoration: underline;
+  }
