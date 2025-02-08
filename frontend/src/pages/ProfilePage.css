@@ -1,66 +1,173 @@
-.profile-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 35vh;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-    margin-top: 5em;
+.profile-page {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--background-color);
 }
 
+/* Banner Styles */
+.banner-background {
+  width: 100%;
+  height: 250px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Profile Container */
+.profile-container {
+  position: relative;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-xl);
+  z-index: 2;
+}
+
+/* Profile Picture */
 .pfp-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  flex-shrink: 0;
+  margin-top: 100px;
 }
 
 .pfp {
-    width: 12.5em;
-    height: 12.5rm;
-    border-radius: 50%;
-    margin-right: 20px;
-    border: 5px solid #f5f5f5;
-    margin-top: -3em;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 5px solid var(--text-color-light);
+  box-shadow: var(--shadow-lg);
+  object-fit: cover;
+  transition: transform var(--transition-normal);
 }
 
-.profile-vert-hr {
-    width: 0;
+.pfp:hover {
+  transform: scale(1.05);
 }
 
-.banner-background {
-    width: 100%;
-    height: 12.5em;
-    background-color: #b1a8b9;
-    position: absolute;
-    z-index: 1;
-}
-
-
-.profile-information {
-    display: flex;
-    flex-direction: row;
-    text-align: left;
-    flex-wrap: wrap;
-}
-
-.profile-information p {
-    margin: 0 2%;
-}
-
+/* Profile Information */
 .profile-info-section {
-    height: 100%;
-    text-align: left;
-    min-width: 50%;
-    margin-top: 9.2em;
+  flex: 1;
+  margin-top: 120px;
+  padding: var(--spacing-lg);
+  background-color: var(--text-color-light);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .profile-info-section h1 {
-    margin: 0 2%;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-2xl);
 }
 
+.profile-information {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.profile-information p {
+  color: var(--text-color);
+  font-size: var(--font-size-base);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.profile-information strong {
+  color: var(--primary-color);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Custom Characters Section */
 .custom-characters-bar {
-    margin-top: 1em;
+  max-width: var(--container-max-width);
+  margin: var(--spacing-xl) auto;
+  padding: 0 var(--spacing-xl);
+}
+
+.custom-characters-bar h2 {
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-xl);
+}
+
+.character-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.character-card {
+  background-color: var(--text-color-light);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.character-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.character-card .placeholder {
+  width: 100%;
+  height: 150px;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.character-card h3 {
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+}
+
+.character-card p {
+  color: var(--text-color);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--spacing-md);
+  }
+
+  .pfp-container {
+    margin-top: 50px;
+  }
+
+  .pfp {
+    width: 150px;
+    height: 150px;
+  }
+
+  .profile-info-section {
+    margin-top: var(--spacing-lg);
+    width: 100%;
+  }
+
+  .profile-information {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-characters-bar {
+    padding: 0 var(--spacing-md);
+  }
 }
