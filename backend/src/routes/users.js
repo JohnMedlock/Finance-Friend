@@ -23,9 +23,9 @@ router.get('/add', async (req, res) => {
   } // try
 }); // addUser
 
-router.get('/get/:email', async (req, res) => {
+router.get('/get', async (req, res) => {
   try {
-    const email = req.params.email;
+    const { email } = req.body;
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -39,10 +39,9 @@ router.get('/get/:email', async (req, res) => {
   } // try
 }); // getUser
 
-router.get('/update/:email', async (req, res) => {
+router.get('/update', async (req, res) => {
   try {
-    const email = req.params.email;
-    const { name, updatedAt, picture } = req.body;
+    const { email, name, updatedAt, picture } = req.body;
 
     const updatedUser = await User.findOneAndUpdate(
       { email },
@@ -60,9 +59,9 @@ router.get('/update/:email', async (req, res) => {
     } // try
   }); // updateUser
 
-router.get('/delete/:email', async (req, res) => {
+router.get('/delete', async (req, res) => {
   try {
-    const email = req.params.email;
+    const { email } = req.body;
     const deletedUser = await User.findOneAndDelete({ email });
 
     if (!deletedUser) {
@@ -94,5 +93,20 @@ router.get('/add-model', async (req, res) => {
     res.status(500).json({ message: error });
   } // try
 }); // addModel
+
+router.get('/get-model', async (req, res) => {
+  try {
+    const { email, modelName } = req.body;
+    const model = await User.findOne({ email: email, modelName: modelName });
+
+    if (!model) {
+      return res.status(404).json({ message: "No model found." });
+    } // if
+
+    res.status(200).json(model);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  } // try
+}); // getModel
 
 export default router;
