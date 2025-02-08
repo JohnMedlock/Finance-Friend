@@ -5,6 +5,21 @@ import './AICharacterPage.css';
 const AICharacterPage = () => {
   const [image, setImage] = useState(null);
   const [characterPrompt, setCharacterPrompt] = useState('');
+  const [characters, setCharacters] = useState([
+    {
+      id: 1,
+      name: 'Billy Joel',
+      imageUrl: '',
+      prompt: 'Provides financial advice in the style of famous piano ballads.'
+    },
+    {
+      id: 2,
+      name: 'Snoop Dogg',
+      imageUrl: '',
+      prompt: 'Gives laid-back, West Coast-themed financial guidance.'
+    }
+  ]);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
 
   const handleImageUpload = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -19,9 +34,19 @@ const AICharacterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Process the image and prompt as needed
-    console.log('Image:', image);
-    console.log('Character Prompt:', characterPrompt);
+    const newCharacter = {
+      id: Date.now(),
+      name: 'New Character',
+      imageUrl: image,
+      prompt: characterPrompt
+    };
+    setCharacters([...characters, newCharacter]);
+    setImage(null);
+    setCharacterPrompt('');
+  };
+
+  const handleSelectCharacter = (char) => {
+    setSelectedCharacter(char);
   };
 
   return (
@@ -58,6 +83,43 @@ const AICharacterPage = () => {
             Save Character
           </button>
         </form>
+
+        <div className="existing-characters">
+          <h2>Your AI Characters</h2>
+          <div className="character-list">
+            {characters.map((char) => (
+              <div
+                key={char.id}
+                className="character-card"
+                onClick={() => handleSelectCharacter(char)}
+              >
+                {char.imageUrl ? (
+                  <img src={char.imageUrl} alt={char.name} />
+                ) : (
+                  <div className="placeholder">No Image</div>
+                )}
+                <h3>{char.name}</h3>
+                <p>{char.prompt}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {selectedCharacter && (
+          <div className="selected-character">
+            <h2>Selected Character</h2>
+            {selectedCharacter.imageUrl ? (
+              <img
+                src={selectedCharacter.imageUrl}
+                alt={selectedCharacter.name}
+              />
+            ) : (
+              <div className="placeholder">No Image</div>
+            )}
+            <h3>{selectedCharacter.name}</h3>
+            <p>{selectedCharacter.prompt}</p>
+          </div>
+        )}
       </div>
     </div>
   );
