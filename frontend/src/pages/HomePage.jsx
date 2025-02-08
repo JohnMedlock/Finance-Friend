@@ -1,8 +1,13 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import React from 'react';
+import { useApi } from '../components/AuthAPI';
 import Header from '../components/Header';
 import './HomePage.css';
 
 const HomePage = () => {
+  const { logout } = useAuth0();
+  const { data, loading, error } = useApi("http://localhost:3000/api/profile");
+
   return (
     <div>
       <Header />
@@ -43,7 +48,12 @@ const HomePage = () => {
           <section className="cta-section">
             <h2>Ready to Start?</h2>
             <p>Take control of your financial future with just a few clicks.</p>
-            <button>Sign Up</button>
+            <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+              Logout
+            </button>
+            {loading && <p>Loading protected data...</p>}
+            {error && <p>Error: {error.message}</p>}
+            {data && <p>Protected Message: {data.message}</p>}
           </section>
         </div>
       </main>
