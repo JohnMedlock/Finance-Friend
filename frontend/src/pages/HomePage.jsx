@@ -35,7 +35,7 @@ const HomePage = () => {
             </ul>
           </section>
 
-          <section className="info-section">
+          <section className="info-section bulleted">
             <h2>Key Features</h2>
             <ul>
               <li>Automatic income and expense tracking</li>
