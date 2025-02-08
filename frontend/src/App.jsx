@@ -1,7 +1,7 @@
 import React from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import FinancialDashboard from './pages/FinancialDashboard';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProfilePage from './pages/ProfilePage';
 
 const App = () => {

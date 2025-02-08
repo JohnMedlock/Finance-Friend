@@ -7,9 +7,10 @@ const Header = () => {
       <h1>Financial Helper</h1>
       <nav>
         <ul className="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#profile">Profile</a></li>
           <li><a href="#dashboard">Dashboard</a></li>
-          <li><a href="#reports">Reports</a></li>
-          <li><a href="#settings">Settings</a></li>
+          <li><a href="#ai-character">AI Character</a></li>
         </ul>
       </nav>
     </header>
