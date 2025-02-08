@@ -13,7 +13,7 @@ router.get('/add', async (req, res) => {
     if (existingUser) {
       res.status(500).json({ message: "User with this email already exists.", user: existingUser });
       return;
-    } // if
+    } // if 
 
     await newUser.save();
 
@@ -39,7 +39,7 @@ router.get('/get/:email', async (req, res) => {
   } // try
 }); // getUser
 
-router.put('/update/:email', async (req, res) => {
+router.get('/update/:email', async (req, res) => {
   try {
     const email = req.params.email;
     const { name, updatedAt, picture } = req.body;
@@ -60,7 +60,7 @@ router.put('/update/:email', async (req, res) => {
     } // try
   }); // updateUser
 
-router.delete('/delete/:email', async (req, res) => {
+router.get('/delete/:email', async (req, res) => {
   try {
     const email = req.params.email;
     const deletedUser = await User.findOneAndDelete({ email });
@@ -74,5 +74,25 @@ router.delete('/delete/:email', async (req, res) => {
     res.status(500).json({ message: error.message });
   } // try
 }); // deleteUser
+
+router.get('/add-model', async (req, res) => {
+  try {
+    const { email, modelName, link } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "No user found." });
+    } // if
+
+    const uid = user._id;
+    const newModel = new Model ({ userId: uid, modelName: modelName, link: link });
+
+    await newModel.save();
+
+    res.status(201).json(newModel);
+      } catch (error) {
+    res.status(500).json({ message: error });
+  } // try
+}); // addModel
 
 export default router;
