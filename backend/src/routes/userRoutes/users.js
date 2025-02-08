@@ -7,8 +7,8 @@ const router = express.Router()
 
 router.post('/add', async (req, res) => {
   try {
-    const { name, email, updatedAt, picture } = req.body;
-    const newUser = new User ({ name, email, updatedAt, picture });
+    const { name, email, password, updatedAt, picture } = req.body;
+    const newUser = new User ({ name, email, password, updatedAt, picture });
 
     const existingUser = await User.findOne({ email: newUser.email });    
     
