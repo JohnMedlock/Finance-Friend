@@ -1,0 +1,29 @@
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: var(--background-color);
+  }
+  
+  .login-page h1 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+  }
+  
+  .login-page button {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .login-page button:hover {
+    background-color: #4a1e7a;
+    transform: translateY(-2px);
+  }

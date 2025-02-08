@@ -7,10 +7,11 @@ import Loading from './components/Loading';
 import AICharacterPage from './pages/AICharacterPage';
 import FinancialDashboard from './pages/FinancialDashboard';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 
 function App() {
-  const { isLoading, isAuthenticated, loginWithRedirect, getAccessTokenSilently } = useAuth0();
+  const { isLoading, isAuthenticated, loginWithRedirect, logout, user, getAccessTokenSilently } = useAuth0();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,10 +25,12 @@ function App() {
       if (isAuthenticated) {
         try {
           const token = await getAccessTokenSilently();
-          console.log("JWT Token:", token);
+          localStorage.setItem('jwt', token);
         } catch (error) {
           console.error("Error fetching token:", error);
         }
+      } else {
+        localStorage.removeItem('jwt');
       }
     };
 
@@ -39,13 +42,14 @@ function App() {
   }
 
   const PrivateRoute = ({ children }) => {
-    return isAuthenticated ? children : <Navigate to="/" />;
+    return isAuthenticated ? children : <Navigate to="/login" />;
   };
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/dashboard"
           element={

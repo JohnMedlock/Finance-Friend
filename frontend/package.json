@@ -10,13 +10,18 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.3.0",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@react-three/fiber": "^8.17.14",
     "chart.js": "^4.4.7",
     "dotenv": "^16.4.7",
+    "nvm": "^0.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.5",
-    "three": "^0.173.0"
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "three": "^0.173.0",
+    "vite-plugin-node-polyfills": "^0.23.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.8",

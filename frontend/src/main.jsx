@@ -10,15 +10,12 @@ const root = createRoot(container);
 const domain = import.meta.env.VITE_ISSUER_BASE_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
-console.log("Auth0 Domain:", domain);
-console.log("Auth0 Client ID:", clientId);
-
 root.render(
   <Auth0Provider
     domain={domain}
     clientId={clientId}
     authorizationParams={{
-      redirect_uri: window.location.origin
+      redirect_uri: window.location.origin,
     }}
   >
     <App />

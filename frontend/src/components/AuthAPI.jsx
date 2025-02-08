@@ -11,6 +11,7 @@ export const useApi = (url) => {
     const fetchData = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
+        localStorage.setItem('jwt', accessToken); // Store JWT in localStorage
 
         const response = await fetch(url, {
           headers: {
