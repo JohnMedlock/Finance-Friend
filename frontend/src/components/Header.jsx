@@ -27,7 +27,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <h1>Financial Helper</h1>
+      <h1>Finance Friend</h1>
       <nav>
         <ul className="nav-links">
           <li><a href="/">Home</a></li>

@@ -14,7 +14,7 @@ const HomePage = () => {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
-          <h1 className="hero-title">Financial Helper</h1>
+          <h1 className="hero-title">Finance Friend</h1>
           <p className="hero-subtitle">
             Simplify your financial life with modern tools and personalized advice.
           </p>
