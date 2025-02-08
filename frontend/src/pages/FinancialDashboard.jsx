@@ -6,12 +6,10 @@ import './FinancialDashboard.css';
 
 const FinancialDashboard = () => {
   return (
-    <div>
+    <div className="financial-dashboard">
       <Header />
-      <div className="financial-dashboard">
-        <Dashboard />
-        <Sidebar />
-      </div>
+      <Dashboard />
+      <Sidebar />
     </div>
   );
 };
