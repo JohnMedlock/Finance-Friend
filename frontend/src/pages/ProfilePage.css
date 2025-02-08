@@ -7,7 +7,7 @@
     align-items: center;
     position: relative;
     z-index: 2;
-    padding-top: 12vh;
+    margin-top: 5em;
 }
 
 .pfp-container {
@@ -18,11 +18,12 @@
 }
 
 .pfp {
-    width: 200px;
-    height: 200px;
+    width: 12.5em;
+    height: 12.5rm;
     border-radius: 50%;
     margin-right: 20px;
     border: 5px solid #f5f5f5;
+    margin-top: -3em;
 }
 
 .profile-vert-hr {
@@ -31,7 +32,7 @@
 
 .banner-background {
     width: 100%;
-    height: 200px;
+    height: 12.5em;
     background-color: #b1a8b9;
     position: absolute;
     z-index: 1;
@@ -51,6 +52,15 @@
 
 .profile-info-section {
     height: 100%;
-    position: relative;
-    top: 30%;
+    text-align: left;
+    min-width: 50%;
+    margin-top: 9.2em;
+}
+
+.profile-info-section h1 {
+    margin: 0 2%;
+}
+
+.custom-characters-bar {
+    margin-top: 1em;
 }
