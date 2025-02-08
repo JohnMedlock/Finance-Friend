@@ -1,6 +1,7 @@
 import express from 'express'
 import User from '../../schemas/User.js'
 import modelRouter from './models.js'
+import chartContainerRouter from './chartContainers.js'
 
 const router = express.Router()
 
@@ -76,6 +77,7 @@ router.get('/delete/:email', async (req, res) => {
   } // try
 }); // deleteUser
 
-router.use('/models', modelRouter)
+router.use('/models', modelRouter);
+router.use('/charts', chartContainerRouter);
 
 export default router;

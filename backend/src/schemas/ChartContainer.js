@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 // TODO: update when needed
-const chartSchema = new mongoose.Schema({
+const chartContainerSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     chart1: {
       value1: {
@@ -27,5 +27,5 @@ const chartSchema = new mongoose.Schema({
     }
   });
   
-  const Chart = mongoose.model('Chart', chartSchema);
-  export default Chart;
+  const ChartContainer = mongoose.model('ChartContainer', chartContainerSchema);
+  export default ChartContainer;
