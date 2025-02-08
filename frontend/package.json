@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && xcopy dist ..\\ /E /I",
+    "build-mac": "vite build && cp -r dist/* ../",
     "preview": "vite preview"
   },
   "dependencies": {
