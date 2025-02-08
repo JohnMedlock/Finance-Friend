@@ -1,9 +1,41 @@
 :root {
-  --primary-color: #5f259f; /* Truist purple */
-  --text-color-light: #ffffff; /* White text */
-  --text-color-dark: #333; /* Dark text */
-  --background-color: #f5f5f5; /* Light background color */
-  --font-family: 'Roboto', sans-serif; /* Professional font */
+  /* Color palette */
+  --primary-color: #5f259f;
+  --primary-light: #7b3cbd;
+  --primary-dark: #4a1e7a;
+  --text-color-light: #ffffff;
+  --text-color-dark: #333333;
+  --background-color: #f5f5f5;
+  
+  /* Typography */
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Borders */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
 }
 
 * {
