@@ -1,6 +1,7 @@
 import React from 'react';
 import './Dashboard.css';
 import PieChart from './PieChart';
+import BalanceGraph from './BalanceGraph';
 
 const Dashboard = () => {
   return (
@@ -9,7 +10,7 @@ const Dashboard = () => {
         <div className="dashboard-cards">
           <div className="card">
             <h2>Account Balance</h2>
-            <p>$10,000</p>
+            <BalanceGraph />
           </div>
           <div className="card">
             <h2>Monthly Expenses</h2>

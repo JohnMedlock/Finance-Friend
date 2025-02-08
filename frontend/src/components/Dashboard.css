@@ -149,3 +149,12 @@
     transform: translateX(100%);
   }
 }
+
+.balances-chart {
+  max-height: fit-content;
+  height: 100%;
+}
+
+.balances-chart-container {
+  height: 100%;
+}
