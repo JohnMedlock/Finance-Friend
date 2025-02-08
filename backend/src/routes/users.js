@@ -2,6 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import User from '../schemas/User.js'
 
+const router = express.Router()
+
 router.get('/add', async (req, res) => {
   try {
     const { name, email, phone } = req.body;
@@ -17,12 +19,12 @@ router.get('/add', async (req, res) => {
     await newUser.save();
 
     res.status(201).json(newUser);
-  } catch {
-    res.status(500).json({ message: error.message  });
+  } catch (error) {
+    res.status(500).json({ message: error });
   } // try
-} // addUser
+}); // addUser
 
-router.get('/get/:email') = async (req, res) => {
+router.get('/get/:email', async (req, res) => {
   try {
     const email = req.params.email;
     const user = await User.findOne({ email });
@@ -33,9 +35,9 @@ router.get('/get/:email') = async (req, res) => {
     } // if
 
     res.status(200).json(user);
-  } catch {
-    res.status(500).json({ message: error.message  });
+  } catch (error) {
+    res.status(500).json({ message: error  });
   } // try
-} // getUserByEmail
+}); // getUserByEmail
 
 export default router;
