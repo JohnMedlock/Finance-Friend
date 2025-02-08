@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh; /* Ensure the container takes the full viewport height */
+  height: 100vh;
   gap: 20px;
   box-sizing: border-box;
-  position: relative; /* Ensure the parent is positioned */
-  overflow: hidden; /* Prevent scrolling */
+  position: relative;
+  overflow: hidden;
 }
 
 .header {
@@ -14,24 +14,24 @@
 }
 
 .sidebar {
-  position: absolute; /* Position the sidebar absolutely */
-  right: 0; /* Align it to the right */
-  top: 0; /* Align it to the top */
-  width: 350px; /* Set a fixed width */
-  height: 100vh; /* Make it full height */
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 350px;
+  height: 100vh;
   padding: 20px;
   background-color: var(--text-color-light);
   border-left: 1px solid var(--primary-color);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  overflow-y: auto; /* Allow scrolling within the sidebar if needed */
+  overflow-y: auto;
 }
 
 .dashboard {
   flex: 1;
-  margin-right: 370px; /* Create space between the dashboard and the sidebar */
-  overflow-y: auto; /* Allow scrolling within the dashboard if needed */
+  margin-right: 370px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center content horizontally */
+  align-items: center;
 }

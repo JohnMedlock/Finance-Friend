@@ -33,6 +33,8 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  padding: 10px;
+  background-color: #f0f0f0;
 }
 
 .chat-log h2 {
@@ -46,7 +48,7 @@
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: left;
   overflow-y: auto;
@@ -54,18 +56,35 @@
 
 .chat-input {
   width: 100%;
+  display: flex;
+  gap: 10px;
   flex-shrink: 0;
+  margin-top: 10px;
 }
 
 .chat-input textarea {
-  width: 100%;
-  height: 40px;
+  flex: 1;
+  height: 60px;
   padding: 10px;
   border: 1px solid #ccc;
   resize: none;
   font-size: 1em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: left;
+}
+
+.send-button {
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.send-button:hover {
+  background-color: #4a1e7a;
+  transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
