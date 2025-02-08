@@ -140,6 +140,12 @@ body, html {
     background-color: #4a1e7a;
     transform: translateY(-2px);
   }
+
+  .bulleted ul{
+    list-style: disc;
+    list-style-type: disc;
+    list-style-position: inside;
+  }
   
   /* Simple fade-up animation for the container */
   @keyframes fadeInUp {
