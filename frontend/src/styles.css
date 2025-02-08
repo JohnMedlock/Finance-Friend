@@ -1,59 +1,65 @@
 :root {
-    --primary-color: #5f259f; /* Truist purple */
-    --text-color-light: #ffffff; /* White text */
-    --text-color-dark: #333; /* Dark text */
-    --background-color: #f5f5f5; /* Light background color */
-  }
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color-dark);
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-  }
-  
-  a {
-    color: var(--primary-color);
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-  }
-  
-  p {
-    margin-bottom: 1rem;
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-  
-  button {
-    background-color: var(--primary-color);
-    color: var(--text-color-light);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #4a1e7a;
-  }
+  --primary-color: #5f259f; /* Truist purple */
+  --text-color-light: #ffffff; /* White text */
+  --text-color-dark: #333; /* Dark text */
+  --background-color: #f5f5f5; /* Light background color */
+  --font-family: 'Roboto', sans-serif; /* Professional font */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color-dark);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #4a1e7a;
+}
