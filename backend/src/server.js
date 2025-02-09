@@ -10,22 +10,20 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const URI = process.env.MONGO_URI || "";
+const URI = process.env.MONGO_URI || '';
 
-app.use(express.json())
-app.use('/', publicRoutes)
-app.use('/api', authenticateToken, protectedRoutes)
+app.use(express.json());
+app.use('/', publicRoutes);
+app.use('/api', authenticateToken, protectedRoutes);
 
 await mongoose.connect(URI);
-console.log("Mongoose connected.");
-
+console.log('Mongoose connected.');
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
 
-/*
-await mongoose.disconnect()
-              .then(() => console.log('MongoDB connection closed'))
-              .catch((err) => console.log('Error while closing connection:', err));
-*/
+await mongoose
+  .disconnect()
+  .then(() => console.log('MongoDB connection closed'))
+  .catch((err) => console.log('Error while closing connection:', err));
