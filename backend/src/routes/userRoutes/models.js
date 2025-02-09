@@ -13,6 +13,12 @@ try {
     return res.status(404).json({ message: "No user found." });
     } // if
 
+    const model = await Model.findOne({ userId: user._id, modelName: modelName });
+    
+    if (model) {
+        return res.status(409).json({ message: "Model already exists." });
+    } // if
+    
     const uid = user._id;
     const newModel = new Model ({ userId: uid, modelName: modelName, link: link });
 
@@ -30,13 +36,13 @@ try {
     const user = await User.findOne({ email: email });
 
     if (!user) {
-    return res.status(404).json({ message: "No user found." });
+        return res.status(404).json({ message: "No user found." });
     } // if
 
     const model = await Model.findOne({ userId: user._id, modelName: modelName });
     
     if (!model) {
-    return res.status(404).json({ message: "No model found." });
+        return res.status(404).json({ message: "No model found." });
     } // if
 
     res.status(200).json(model);
