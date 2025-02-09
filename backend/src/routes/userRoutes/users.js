@@ -1,6 +1,7 @@
 import express from 'express'
 import User from '../../schemas/User.js'
 import chartContainerRouter from './chartContainers.js'
+import chatLogRouter from './chatLog.js'
 import modelRouter from './models.js'
 
 const router = express.Router()
@@ -84,5 +85,6 @@ router.get('/delete/:email', async (req, res) => {
 
 router.use('/models', modelRouter);
 router.use('/charts', chartContainerRouter);
+router.use('/chats', chatLogRouter);
 
 export default router;
