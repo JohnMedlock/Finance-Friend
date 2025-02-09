@@ -98,6 +98,6 @@ router.get('/delete/:email', async (req, res) => {
 
 router.use('/models', modelRouter);
 router.use('/charts', chartContainerRouter);
-router.use('/chats', chatLogRouter);
+// router.use('/chats', chatLogRouter);
 
 export default router;

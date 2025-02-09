@@ -9,6 +9,8 @@ lerna-debug.log*
 
 node_modules
 
+financefriend-7ca2c62e7937.json
+
 dist-ssr
 *.local
 
