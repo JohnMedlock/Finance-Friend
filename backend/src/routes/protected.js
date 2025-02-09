@@ -88,16 +88,17 @@ router.post(
   },
 );
 
-router.post('/chat', async (req, res) => {
+router.post('/chat', upload.none(), async (req, res) => {
   try {
-    const { prompt, name } = req.body;
+    const prompt = req.body.prompt;
+    const name = req.body.Name;
+
     if (!name) {
       return res.status(400).json({ error: 'Name is required.' });
     }
 
     const response = await chat(prompt, name);
-
-    return res.status(200).json(response);
+    return res.status(200).json({ response: response });
   } catch (error) {
     console.error('Error in /chat:', error);
     return res.status(500).json({ error: error.message });
