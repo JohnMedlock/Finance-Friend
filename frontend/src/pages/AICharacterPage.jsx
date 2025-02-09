@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './AICharacterPage.css';
+import { Profile3D } from '../components/Profile3D';
 
 // Since the server routes are POST /api/add and GET /api/users/get/:email:
 // we point the base URL to /api.
@@ -153,7 +154,7 @@ const AICharacterPage = () => {
                 onClick={() => handleSelectCharacter(char)}
               >
                 <h3>{char.modelName}</h3>
-                <p>{char.link}</p>
+                <Profile3D modelName={char.modelName} />
               </div>
             ))}
           </div>
@@ -163,7 +164,7 @@ const AICharacterPage = () => {
           <div className="selected-character">
             <h2>Selected Character</h2>
             <h3>{selectedCharacter.modelName}</h3>
-            <p>{selectedCharacter.link}</p>
+            <Profile3D modelName={selectedCharacter.modelName} />
           </div>
         )}
       </div>

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, use } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import { Vector3, Euler, RGBA_ASTC_10x10_Format } from 'three';
+import './Profile3D.css';
 
 const API_URL = 'http://localhost:3000/api';
 
@@ -47,7 +48,7 @@ export function Profile3D({ modelName = 'Snoop Dogg'}) {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: email, modelName: localStorage.getItem('modelName') }),
+      body: JSON.stringify({ email: email, modelName: modelName }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -87,7 +88,7 @@ export function Profile3D({ modelName = 'Snoop Dogg'}) {
   };
 
   return (
-    <Canvas shadows camera={{ position: [0, 0, 2.3], rotation: new Euler(0, 0, 0), fov: 60 }}>
+    <Canvas className="canvas3DProfile" shadows camera={{ position: [0, 0, 2.3], rotation: new Euler(0, 0, 0), fov: 60 }}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={1.5} />
       <Environment preset="sunset" />
