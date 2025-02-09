@@ -23,6 +23,8 @@ const LoginPage = () => {
       if (response.data.jwt) {
         console.log('Login successful!');
         console.log('JWT Token:', response.data.jwt);
+        localStorage.setItem('token', response.data.jwt);
+        localStorage.setItem('email', email);
         login(response.data.jwt); // Use the login function from AuthContext
         navigate('/dashboard'); // Redirect to dashboard after login
       } else {
