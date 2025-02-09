@@ -2,9 +2,7 @@ import { verifyToken } from './authUtils.js';
 
 export const authenticateToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  console.log(req.headers)
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    console.log(authHeader);
     return res
       .status(401)
       .json({ error: 'Unauthorized: Missing or invalid token.' });

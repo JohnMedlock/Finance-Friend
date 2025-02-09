@@ -3,9 +3,11 @@ import { Profile3D } from './Profile3D';
 import './Sidebar.css';
 import paperclip from '../assets/paperclip.png';
 
+const aiCharacter = localStorage.getItem('selectedCharacter');
+
 const Sidebar = () => {
   const [messages, setMessages] = useState([
-    { id: 1, user: 'AI Assistant', text: 'Hello! How can I help you today?' }
+    { id: 1, user: aiCharacter, text: 'Hello! How can I help you today?' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const messagesEndRef = useRef(null);
@@ -36,7 +38,7 @@ const Sidebar = () => {
     if (input) {
       const formData = new FormData();
         formData.append('prompt', input);
-        formData.append('Name', 'Snoop Dogg');
+        formData.append('Name', aiCharacter);
     
         fetch('http://localhost:3000/api/chat', { 
           method: 'POST',
@@ -58,7 +60,7 @@ const Sidebar = () => {
             
             setMessages(prevMessages => [
               ...prevMessages, 
-              { id: prevMessages.length + 1, user: 'AI Assistant', text: parsedData.response }
+              { id: prevMessages.length + 1, user: aiCharacter, text: parsedData.response }
             ]);
           })
           .catch(error => {
@@ -124,7 +126,7 @@ const Sidebar = () => {
       </div>
       
       <div className="chat-log">
-        <h2>Chat with AI Assistant</h2>
+        <h2>Chat with {aiCharacter}</h2>
         <div className="messages">
           {messages.map((message) => (
             <div 

@@ -12,30 +12,40 @@ const AICharacterPage = () => {
   const [characters, setCharacters] = useState([]);
   const [selectedCharacter, setSelectedCharacter] = useState(null);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const email = localStorage.getItem('email');
-        const token = localStorage.getItem('token');
+  const fetchUserData = async () => {
+    try {
+      const email = localStorage.getItem('email');
+      const token = localStorage.getItem('token');
 
-        if (!email) {
-          console.error('Email is not set in localStorage');
-          return;
-        }
-
-        // GET /api/users/get/:email
-        const userResponse = await axios.get(`${API_URL}/users/models/getModelsByUser/` + email, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-        });
-
-        const modelsArray = Array.isArray(userResponse.data.models) ? userResponse.data.models : [userResponse.data.models];
-        setCharacters(modelsArray.filter(Boolean));
-      } catch (error) {
-        console.error('Error fetching data:', error.response?.data || error);
+      if (!email) {
+        console.error('Email is not set in localStorage');
+        return;
       }
-    };
+
+      fetch(`${API_URL}/users/models/getModelsByUser/` + email, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }).then(response => {
+        if (response.ok) {
+          return response.json(); // Return the promise here
+        }
+        throw new Error('Failed to fetch user data');
+      })
+      .then(parsedData => {
+        setCharacters(parsedData);
+      });
+
+      
+
+      
+    } catch (error) {
+      console.error('Error fetching data:', error.response?.data || error);
+    }
+  };
+
+  useEffect(() => {    
 
     fetchUserData();
   }, []);
@@ -59,17 +69,36 @@ const AICharacterPage = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`${API_URL}/textTo3D`, {
+      console.log('Token:', token);
+
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('modelName', characterName);
+      formData.append('prompt', characterPrompt);
+
+      fetch(`${API_URL}/textTo3D`, {
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
         },
-        body: {
-          email,
-          modelName: characterName,
-          prompt: characterPrompt,
-        }
-      });
-      setCharacters([...characters, response.data]);
+        body: JSON.stringify({ 
+          email: email, 
+          prompt: characterPrompt, 
+          modelName: characterName 
+        }),
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json(); // Return the promise here
+          } else {
+            throw new Error('Character creation failed');
+          }
+        })
+        .then(parsedData => {
+          fetchUserData();
+        })
+      ;
       setCharacterName('');
       setCharacterPrompt('');
     } catch (error) {
@@ -78,7 +107,9 @@ const AICharacterPage = () => {
   };
 
   const handleSelectCharacter = (char) => {
+    localStorage.setItem('selectedCharacter', char.modelName);
     setSelectedCharacter(char);
+    window.location.href = '/#/dashboard';
   };
 
   return (

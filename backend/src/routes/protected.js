@@ -18,6 +18,7 @@ router.use('/users', userRoutes);
 router.post('/textTo3D', async (req, res) => {
   try {
     const { email, prompt, modelName } = req.body;
+    console.log(req.body.email);
     if (!prompt) {
       return res.status(400).json({ error: 'Prompt is required.' });
     }
