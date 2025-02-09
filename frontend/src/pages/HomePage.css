@@ -27,6 +27,10 @@ body, html {
     color: var(--primary-color);
     margin-bottom: 20px;
     transition: color 0.3s ease;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
   
   .hero-title:hover {
