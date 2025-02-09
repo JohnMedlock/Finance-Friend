@@ -13,7 +13,7 @@ const ProfilePage = () => {
       try {
         const email = 'jwmedlock@icloud.com';
         const token = localStorage.getItem('token');
-        const userResponse = await axios.get(`http://localhost:3000/api/users/get/${email}`, {
+        const userResponse = await axios.get(`/api/users/get/${email}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
