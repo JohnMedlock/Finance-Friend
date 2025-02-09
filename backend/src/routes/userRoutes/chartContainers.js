@@ -6,8 +6,8 @@ const router = express.Router()
   
 router.post('/add', async (req, res) => {
     try {
-        const { email, chart1, chart2, chart3, chart4 } = req.body;
-        const user = await User.findOne({ email: email });
+        const { email, balanceOverTimePoints, spendingCategories, spending, income } = req.body;
+        const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(404).json({ message: "No user found." });
@@ -16,13 +16,16 @@ router.post('/add', async (req, res) => {
         const uid = user._id;
         const newContainer = new ChartContainer({
             userId: uid,
-            chart1: {
-                value1: chart1.value1,
-                value2: chart1.value2,
+            balanceOverTime: {
+                balanceOverTimePoints: balanceOverTimePoints
             },
-            chart2: chart2,
-            chart3: chart3,
-            chart4: chart4
+            spendingSectors: {
+                spendingCategories: spendingCategories
+            },
+            incomeAndSpending: {
+                spending: spending,
+                income: income
+            }
         });
 
         await newContainer.save();
@@ -56,27 +59,34 @@ router.get('/get', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     try {
-        const { email, chart1, chart2, chart3, chart4 } = req.body;
+        const { email, balanceOverTimePoints, spendingCategories, spending, income } = req.body;
         const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(404).json({ message: "No user found." });
-        }
+        } // if
 
         const updatedContainer = await ChartContainer.findOneAndUpdate(
             { userId: user._id },
-            { chart1, chart2, chart3, chart4 },
+            { 
+                $set: {
+                    balanceOverTime: { balanceOverTimePoints },
+                    spendingSectors: { spendingCategories },
+                    incomeAndSpending: { spending, income }
+                }
+            },
             { new: true, runValidators: true }
         );
 
         if (!updatedContainer) {
             return res.status(404).json({ message: "No container found." });
-        }
+        } // IF
 
         res.status(200).json(updatedContainer);
     } catch (error) {
         res.status(500).json({ message: error });
     } // try
 }); // updateChartContainer
+
 
 export default router;

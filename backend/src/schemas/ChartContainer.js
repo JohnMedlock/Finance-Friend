@@ -19,13 +19,9 @@ const chartContainerSchema = new mongoose.Schema({
     ],
   },
   incomeAndSpending: {
-    type: String,
-    required: true
+    spending: { type: Number, required: true },
+    income: { type: Number, required: true }
   },
-  chart4: {
-    type: String,
-    required: true
-  }
 });
   
   const ChartContainer = mongoose.model('ChartContainer', chartContainerSchema);
