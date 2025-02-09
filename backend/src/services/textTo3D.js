@@ -1,4 +1,3 @@
-// textTo3D.js
 import axios from 'axios';
 import Model from '../schemas/Model.js';
 import User from '../schemas/User.js';
@@ -16,7 +15,7 @@ async function pollUntilComplete(
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
       const { data } = await axios.get(`${MESHY_BASE_URL}/${taskID}`, {
-        meshi_headers,
+        headers: meshi_headers, // Corrected here
       });
       console.log(
         `Polling attempt #${attempt}: task=${taskID}, status=${data.status}`,
@@ -52,7 +51,7 @@ export default async function textTo3D(email, prompt, modelName) {
       target_polycount: 10000,
     };
     const previewRes = await axios.post(MESHY_BASE_URL, previewPayload, {
-      meshi_headers,
+      headers: meshi_headers, // Corrected here
     });
     previewTaskID = previewRes.data.result;
     console.log('Preview started:', previewTaskID);
@@ -77,7 +76,7 @@ export default async function textTo3D(email, prompt, modelName) {
       texture_prompt: `Ultra realistic real-life ${prompt}`,
     };
     const refineRes = await axios.post(MESHY_BASE_URL, refinePayload, {
-      meshi_headers,
+      headers: meshi_headers, // Corrected here
     });
     refineTaskID = refineRes.data.result;
     console.log('Refine started:', refineTaskID);
@@ -90,7 +89,7 @@ export default async function textTo3D(email, prompt, modelName) {
   try {
     await pollUntilComplete(refineTaskID, meshi_headers);
     finalRes = await axios.get(`${MESHY_BASE_URL}/${refineTaskID}`, {
-      meshi_headers,
+      headers: meshi_headers, // Corrected here
     });
     console.log('Final GET data:', finalRes.data);
   } catch (error) {
@@ -105,17 +104,21 @@ export default async function textTo3D(email, prompt, modelName) {
   const user = await User.findOne({ email });
   const model = await Model.findOne({ userId: user._id, modelName: modelName });
 
-  // TODO: fix???
   if (!user || model) {
-    console.error("Either model exists or user does not exist. sorry for bad error lmao");
+    console.error(
+      'Either model exists or user does not exist. sorry for bad error lmao',
+    );
   } else {
     const uid = user._id;
-    const newModel = new Model ({ userId: uid, modelName: modelName, link: glbUrl });
+    const newModel = new Model({
+      userId: uid,
+      modelName: modelName,
+      link: glbUrl,
+    });
     await newModel.save();
-  } // if
+  }
 
-
-  try {    
+  try {
     const glbResponse = await axios.get(glbUrl, {
       responseType: 'arraybuffer',
     });
