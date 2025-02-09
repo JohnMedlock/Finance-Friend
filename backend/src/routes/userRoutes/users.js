@@ -37,7 +37,7 @@ router.get('/get/:email', async (req, res) => {
       return;
     } // if
 
-    const userModels = await ChartContainer.find({ userId: user._id });
+    const userModels = await Model.find({ userId: user._id });
 
     res.status(200).json({
       user: user,
