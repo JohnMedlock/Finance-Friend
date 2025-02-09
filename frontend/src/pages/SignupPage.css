@@ -169,3 +169,38 @@ body {
 .form-container {
   animation: fadeIn var(--transition-normal);
 }
+
+.file-upload-container {
+  margin-bottom: 1rem;
+}
+
+.upload-button-wrapper {
+  margin-top: 0.5rem;
+}
+
+.upload-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.upload-button:hover {
+  background-color: #e0e0e0;
+}
+
+.image-preview {
+  margin-top: 1rem;
+  max-width: 150px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
