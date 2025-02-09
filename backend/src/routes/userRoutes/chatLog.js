@@ -13,7 +13,7 @@ try {
         return res.status(404).json({ message: "No user found." });
     } // if
 
-    const model = await Modeel.findOne({ email });
+    const model = await Model.findOne({ email });
     if (!model) {
         return res.status(404).json({ message: "No model found." });
     } // if
