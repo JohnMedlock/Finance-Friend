@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Profile3D } from './Profile3D';
 import './Sidebar.css';
+import paperclip from '../assets/paperclip.png';
 
 const Sidebar = () => {
   const [messages, setMessages] = useState([
@@ -30,6 +31,38 @@ const Sidebar = () => {
 
     setMessages([...messages, newMessage]);
     setInputMessage('');
+  };
+
+  const handleSendFile = (e) => {
+    e.preventDefault();
+
+    const input = document.getElementById('file-input').files[0];
+
+    if (input) {
+      const formData = new FormData();
+        formData.append('file', input);
+    
+        fetch('/parse-bank-data', { // Replace '/upload' with your server endpoint
+          method: 'POST',
+          body: formData,
+        })
+        .then(response => {
+          if (response.ok) {
+            parsedData = response.json();
+            console.log('File uploaded successfully');
+            setMessages([...messages, { id: messages, user: 'User', text: parsedData.commentary }]);
+          } else {
+            console.error('File upload failed');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+
+    const file = 
+
+    const incomingMessage = fetch('http://localhost:3000/parse-bank-statement', {});
   };
 
   const handleKeyPress = (e) => {
@@ -66,7 +99,12 @@ const Sidebar = () => {
         </div>
       </div>
 
+      
       <form className="chat-input" onSubmit={handleSendMessage}>
+        <label for="file-input" className="upload-button">
+          <img src={paperclip} alt="Attach file" />
+        </label>
+        <input type="file" id="file-input" style={{display: "none"}}/>
         <textarea
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
@@ -74,13 +112,14 @@ const Sidebar = () => {
           placeholder="Type your message here..."
           rows="3"
         />
-        <button 
-          type="submit" 
-          className="send-button"
-          disabled={!inputMessage.trim()}
-        >
-          Send
-        </button>
+          <button 
+            type="submit" 
+            className="send-button"
+            disabled={!inputMessage.trim()}
+          >
+            Send
+          </button>
+          
       </form>
     </div>
   );
