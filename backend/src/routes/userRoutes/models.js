@@ -10,7 +10,7 @@ try {
     const user = await User.findOne({ email });
 
     if (!user) {
-    return res.status(404).json({ message: "No user found." });
+        return res.status(404).json({ message: "No user found." });
     } // if
 
     const model = await Model.findOne({ userId: user._id, modelName: modelName });

@@ -22,7 +22,7 @@ router.post('/textTo3D', async (req, res) => {
       return res.status(400).json({ error: 'Prompt is required.' });
     }
 
-    const glbBuffer = await textTo3D(prompt);
+    const glbBuffer = await textTo3D(email, prompt, modelName);
     res.setHeader('Content-Type', 'model/gltf-binary');
     res.send(glbBuffer);
   } catch (error) {
