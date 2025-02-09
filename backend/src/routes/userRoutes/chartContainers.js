@@ -13,7 +13,6 @@ router.post('/add', async (req, res) => {
             return res.status(404).json({ message: "No user found." });
         } // if
         
-        
         const uid = user._id;
 
         const newContainer = new ChartContainer({
@@ -39,7 +38,7 @@ router.get('/get', async (req, res) => {
             return res.status(404).json({ message: "No user found." });
         } // if
 
-        const container = await ChartContainer.findOne({ userId: user._id });
+        const container = await ChartContainer.findOne({ userId: user._id }).sort({ timestamp: -1 });
         
         if (!container) {
             return res.status(404).json({ message: "No charts found." });
