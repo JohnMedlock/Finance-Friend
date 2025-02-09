@@ -1,26 +1,32 @@
 import express from 'express'
-import User from '../../schemas/User.js'
 import Model from '../../schemas/Model.js'
+import ChatLog from '../../schemas/ChatLog.js'
 
 const router = express.Router()
   
-router.post('/add', async (req, res) => {
+router.post('/store', async (req, res) => {
 try {
-    const { email, modelName, link } = req.body;
+    const { email, content, sender, modelName } = req.body;
     const user = await User.findOne({ email });
 
     if (!user) {
-    return res.status(404).json({ message: "No user found." });
+        return res.status(404).json({ message: "No user found." });
     } // if
 
-    const model = await Model.findOne({ userId: user._id, modelName: modelName });
-    
-    if (model) {
-        return res.status(409).json({ message: "Model already exists." });
+    const model = await Modeel.findOne({ email });
+    if (!model) {
+        return res.status(404).json({ message: "No model found." });
     } // if
-    
+
     const uid = user._id;
-    const newModel = new Model ({ userId: uid, modelName: modelName, link: link });
+    const mid = model._id;
+
+    const stordLog = new ChatLog ({ 
+        userId: uid, 
+        modelId: mid,
+        messageContent: content,
+        sender: sender
+    });
 
     await newModel.save();
 
@@ -36,13 +42,13 @@ try {
     const user = await User.findOne({ email: email });
 
     if (!user) {
-        return res.status(404).json({ message: "No user found." });
+    return res.status(404).json({ message: "No user found." });
     } // if
 
     const model = await Model.findOne({ userId: user._id, modelName: modelName });
     
     if (!model) {
-        return res.status(404).json({ message: "No model found." });
+    return res.status(404).json({ message: "No model found." });
     } // if
 
     res.status(200).json(model);

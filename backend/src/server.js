@@ -35,3 +35,9 @@ app.use('/api', authenticateToken, protectedRoutes);;
         console.error("Error connecting to MongoDB:", error);
     }
 })();
+
+/*
+await mongoose.disconnect()
+    .then(() => console.log('MongoDB connection closed'))
+    .catch((err) => console.log('Error while closing connection:', err));
+*/
