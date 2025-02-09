@@ -28,13 +28,13 @@ const PieChart = () => {
 
         const container = await response.json();
         if (
-          !container.spendingSectors ||
-          !container.spendingSectors.spendingCategories
+          !container ||
+          !container.spendingCategories
         ) {
-          console.warn('spendingSectors missing in container data:', container);
+          console.warn('spendingCategories missing in container data:', container);
           return;
         }
-        setSpendingCategories(container.spendingSectors.spendingCategories);
+        setSpendingCategories(container.spendingCategories);
       } catch (error) {
         console.error('Error fetching chart data:', error);
       }
