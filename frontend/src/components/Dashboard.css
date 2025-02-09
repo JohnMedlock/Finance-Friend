@@ -28,6 +28,7 @@
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-xl);
   min-height: 200px;
+  height: 30em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
