@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, use } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
-import { Vector3, Euler } from 'three';
+import { Vector3, Euler, RGBA_ASTC_10x10_Format } from 'three';
 
 const API_URL = 'http://localhost:3000/api';
 
@@ -12,7 +12,8 @@ function Model({ onResetRotation, modelData, ...props }) {
   const meshRef = useRef();
 
   // Store the initial rotation (example: tilt the head downward)
-  const defaultRotation = new Euler(-Math.PI / 2, 0, 0);
+  const defaultRotation = new Euler(0, 0, 0);
+  
 
   // Provide a way for the parent to reset the mesh rotation
   onResetRotation.current = () => {
@@ -27,7 +28,7 @@ function Model({ onResetRotation, modelData, ...props }) {
 // Main Component
 export function Profile3D({ modelName = 'Snoop Dogg'}) {
   const controlsRef = useRef();
-  const defaultCameraPosition = new Vector3(0, 3, 0);
+  const defaultCameraPosition = new Vector3(0, 0, 2.3);
   const modelResetRef = useRef(() => {}); // Function reference to reset model
   const [modelData, setModelData] = useState(null);
 
@@ -86,7 +87,7 @@ export function Profile3D({ modelName = 'Snoop Dogg'}) {
   };
 
   return (
-    <Canvas shadows camera={{ position: [0, 3, 0], fov: 60 }}>
+    <Canvas shadows camera={{ position: [0, 0, 2.3], rotation: new Euler(0, 0, 0), fov: 60 }}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={1.5} />
       <Environment preset="sunset" />
@@ -103,6 +104,7 @@ export function Profile3D({ modelName = 'Snoop Dogg'}) {
       <OrbitControls
         ref={controlsRef}
         enableDamping={true}
+        target={[0, 0, 0]} 
         dampingFactor={0.1}
         onEnd={handleEnd}
       />
