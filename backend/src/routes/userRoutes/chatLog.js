@@ -19,42 +19,68 @@ try {
     } // if
 
     const uid = user._id;
-    const mid = model._id;
 
-    const stordLog = new ChatLog ({ 
+    const storedLog = new ChatLog ({ 
         userId: uid, 
-        modelId: mid,
+        modelName: modelName,
         messageContent: content,
         sender: sender
     });
 
-    await newModel.save();
+    await storedLog.save();
 
-    res.status(201).json(newModel);
+    res.status(201).json(storedLog);
     } catch (error) {
     res.status(500).json({ message: error });
 } // try
-}); // addModel
+}); // store
 
-router.get('/get', async (req, res) => {
-try {
-    const { email, modelName } = req.query;
-    const user = await User.findOne({ email: email });
+router.get('/get-user-character', async (req, res) => {
+    try {
+        const { email, modelName } = req.query;
+        const user = await User.findOne({ email: email });
 
-    if (!user) {
-    return res.status(404).json({ message: "No user found." });
-    } // if
+        if (!user) {
+            return res.status(404).json({ message: "No user found." });
+        } // if
 
-    const model = await Model.findOne({ userId: user._id, modelName: modelName });
+        const model = await Model.findOne({ userId: user._id, modelName: modelName });
+        
+        if (!model) {
+            return res.status(404).json({ message: "No model found." });
+        } // if
+
+        const chatlog = await ChatLog.find({ userId: user._id, modelName: modelName }).sort({ timestamp: -1 });
+        
+        if (!chatlog.length) {
+            return res.status(404).json({ message: 'No chat logs found for this model.' });
+        } // if
+
+        res.status(200).json(chatlog);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    } // try
+});
+
+router.get('/get-user', async (req, res) => {
+    try {
+        const { email, modelName } = req.query;
+        const user = await User.findOne({ email: email });
     
-    if (!model) {
-    return res.status(404).json({ message: "No model found." });
-    } // if
-
-    res.status(200).json(model);
-} catch (error) {
-    res.status(500).json({ message: error });
-} // try
+        if (!user) {
+            return res.status(404).json({ message: "No user found." });
+        } // if
+    
+        const chatlog = await ChatLog.find({ userId: user._id }).sort({ timestamp: -1 });
+        
+        if (!chatlog.length) {
+            return res.status(404).json({ message: 'No chat logs found for this user.' });
+        } // if
+    
+        res.status(200).json(chatlog);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    } // try
 }); // getModel
 
 export default router;

@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './AICharacterPage.css';
 
-// Since the server routes are POST /api/add and GET /api/get:
-// we point the base URL to /api (instead of /api/characters).
-const API_URL = 'http://localhost:3000/api/users/models';
+// Since the server routes are POST /api/add and GET /api/users/get/:email:
+// we point the base URL to /api.
+const API_URL = 'http://localhost:3000/api';
 
 const AICharacterPage = () => {
   const [characterName, setCharacterName] = useState('');
@@ -13,32 +13,31 @@ const AICharacterPage = () => {
   const [selectedCharacter, setSelectedCharacter] = useState(null);
 
   useEffect(() => {
-    const fetchCharacters = async () => {
+    const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('token');
         const email = localStorage.getItem('email');
+        const token = localStorage.getItem('token');
 
         if (!email) {
           console.error('Email is not set in localStorage');
           return;
         }
 
-        // GET /api/get
-        const response = await axios.get(`${API_URL}/get`, {
+        // GET /api/users/get/:email
+        const userResponse = await axios.get(`${API_URL}/users/get/${email}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            email,
-          },
+            Authorization: `Bearer ${token}`
+          }
         });
-        setCharacters(response.data);
+
+        const modelsArray = Array.isArray(userResponse.data.models) ? userResponse.data.models : [userResponse.data.models];
+        setCharacters(modelsArray.filter(Boolean));
       } catch (error) {
-        console.error('Error fetching characters:', error.response?.data || error);
+        console.error('Error fetching data:', error.response?.data || error);
       }
     };
 
-    fetchCharacters();
+    fetchUserData();
   }, []);
 
   const handleNameChange = (e) => {
@@ -120,7 +119,7 @@ const AICharacterPage = () => {
           <div className="character-list">
             {characters.map((char) => (
               <div
-                key={char.id}
+                key={char._id} // Ensure each character has a unique key
                 className="character-card"
                 onClick={() => handleSelectCharacter(char)}
               >
