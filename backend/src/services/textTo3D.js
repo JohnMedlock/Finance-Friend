@@ -9,14 +9,14 @@ const POLL_INTERVAL = 3000;
 
 async function pollUntilComplete(
   taskID,
-  headers,
+  meshi_headers,
   maxAttempts = MAX_ATTEMPTS,
   interval = POLL_INTERVAL,
 ) {
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
       const { data } = await axios.get(`${MESHY_BASE_URL}/${taskID}`, {
-        headers,
+        meshi_headers,
       });
       console.log(
         `Polling attempt #${attempt}: task=${taskID}, status=${data.status}`,
@@ -36,7 +36,7 @@ async function pollUntilComplete(
 }
 
 export default async function textTo3D(email, prompt, modelName) {
-  const headers = {
+  const meshi_headers = {
     Authorization: `Bearer ${process.env.MESHY_API_KEY}`,
     'Content-Type': 'application/json',
   };
@@ -52,7 +52,7 @@ export default async function textTo3D(email, prompt, modelName) {
       target_polycount: 10000,
     };
     const previewRes = await axios.post(MESHY_BASE_URL, previewPayload, {
-      headers,
+      meshi_headers,
     });
     previewTaskID = previewRes.data.result;
     console.log('Preview started:', previewTaskID);
@@ -62,7 +62,7 @@ export default async function textTo3D(email, prompt, modelName) {
   }
 
   try {
-    const previewData = await pollUntilComplete(previewTaskID, headers);
+    const previewData = await pollUntilComplete(previewTaskID, meshi_headers);
     console.log('Preview completed:', previewData);
   } catch (error) {
     console.error('Error polling preview:', error);
@@ -77,7 +77,7 @@ export default async function textTo3D(email, prompt, modelName) {
       texture_prompt: `Ultra realistic real-life ${prompt}`,
     };
     const refineRes = await axios.post(MESHY_BASE_URL, refinePayload, {
-      headers,
+      meshi_headers,
     });
     refineTaskID = refineRes.data.result;
     console.log('Refine started:', refineTaskID);
@@ -88,9 +88,9 @@ export default async function textTo3D(email, prompt, modelName) {
 
   let finalRes;
   try {
-    await pollUntilComplete(refineTaskID, headers);
+    await pollUntilComplete(refineTaskID, meshi_headers);
     finalRes = await axios.get(`${MESHY_BASE_URL}/${refineTaskID}`, {
-      headers,
+      meshi_headers,
     });
     console.log('Final GET data:', finalRes.data);
   } catch (error) {
