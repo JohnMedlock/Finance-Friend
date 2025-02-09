@@ -3,7 +3,7 @@ import { Profile3D } from './Profile3D';
 import './Sidebar.css';
 import paperclip from '../assets/paperclip.png';
 
-const API_URL = '/api';
+const API_URL = 'http://localhost:3000/api';
 
 const Sidebar = () => {
   const [aiCharacter, setAiCharacter] = useState('');
@@ -106,7 +106,7 @@ const Sidebar = () => {
       formData.append('prompt', input);
       formData.append('Name', aiCharacter);
 
-      fetch('/api/chat', {
+      fetch('http://localhost:3000/api/chat', {
         method: 'POST',
         body: formData,
         headers: {
@@ -180,7 +180,7 @@ const Sidebar = () => {
       formData.append('file', input);
       formData.append('name', 'Snoop Dogg');
 
-      fetch('/api/parse-bank-statement', {
+      fetch('http://localhost:3000/api/parse-bank-statement', {
         method: 'POST',
         body: formData,
         headers: {

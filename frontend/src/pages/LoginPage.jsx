@@ -16,7 +16,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       // Using direct route without authentication
-      const response = await axios.post('/login', {
+      const response = await axios.post('http://localhost:3000/login', {
         email,
         password
       });
