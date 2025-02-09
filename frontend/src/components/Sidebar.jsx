@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Profile3D } from './Profile3D';
 import './Sidebar.css';
+import paperclip from '../assets/paperclip.png';
 
 const Sidebar = () => {
   const [messages, setMessages] = useState([
@@ -66,7 +67,12 @@ const Sidebar = () => {
         </div>
       </div>
 
+      
       <form className="chat-input" onSubmit={handleSendMessage}>
+        <label for="file-input" className="upload-button">
+          <img src={paperclip} alt="Attach file" />
+        </label>
+        <input type="file" id="file-input" style={{display: "none"}}/>
         <textarea
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
@@ -74,13 +80,14 @@ const Sidebar = () => {
           placeholder="Type your message here..."
           rows="3"
         />
-        <button 
-          type="submit" 
-          className="send-button"
-          disabled={!inputMessage.trim()}
-        >
-          Send
-        </button>
+          <button 
+            type="submit" 
+            className="send-button"
+            disabled={!inputMessage.trim()}
+          >
+            Send
+          </button>
+          
       </form>
     </div>
   );
