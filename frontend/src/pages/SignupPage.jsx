@@ -6,6 +6,7 @@ import './signuppage.css';
 
 const SignupPage = () => {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [picture, setPicture] = useState('');
@@ -54,6 +55,16 @@ const SignupPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="Enter your email"
+              />
+            </div>
+            <div>
+              <label>Name:</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                placeholder="Enter your name"
               />
             </div>
             <div>

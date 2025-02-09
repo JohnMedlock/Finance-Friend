@@ -24,14 +24,15 @@
 }
 
 .picture canvas {
-  width: 75% !important;
-  height: 150px !important;
+  width: 90% !important;
+  height: 90% !important;
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: #f1f1f1;
 }
 
 .chat-log {
@@ -64,7 +65,7 @@
 }
 
 .message {
-  padding: var(--spacing-md);
+  padding: .5em;
   margin-bottom: var(--spacing-md);
   border-radius: var(--border-radius-md);
   max-width: 85%;
@@ -92,6 +93,7 @@
 
 .message-user {
   font-weight: var(--font-weight-bold);
+  font-style: italic;
 }
 
 .message-time {
@@ -102,7 +104,10 @@
 .message-text {
   margin: 0;
   word-break: break-word;
+  font-size: .9em;
+  font-weight: 500;
   line-height: 1.4;
+  text-align: left;
 }
 
 .chat-input {
