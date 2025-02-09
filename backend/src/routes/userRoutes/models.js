@@ -50,7 +50,22 @@ router.get('/getModelsByUser/:email', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error });
     } // try
-    }); // getModel
+}); // getModelsByUser
+
+router.get('/getModelByModelId/:id', async (req, res) => {
+    try {
+        const email = req.params.id;
+        const model = await Modl.findOne({ _id: id });
+    
+        if (!model) {
+            return res.status(404).json({ message: "No model found." });
+        } // if
+    
+        res.status(200).json(model);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    } // try
+}); // getModelByModelId
 
     
 router.get('/get', async (req, res) => {
@@ -72,6 +87,6 @@ try {
 } catch (error) {
     res.status(500).json({ message: error });
 } // try
-}); // getModel
+}); // get
 
 export default router;
