@@ -11,16 +11,19 @@ const BalanceGraph = () => {
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const response = await axios.get('/api/chartContainers/get', {
+        const url = `http://localhost:3000/api/users/charts/get`;
+
+        const response = await axios.get(url, {
           params: { email },
         });
         const container = response.data;
+
         if (
           container &&
           container.balanceOverTime &&
-          Array.isArray(container.balanceOverTime.balanceOverTimePoints)
+          Array.isArray(container.balanceOverTime)
         ) {
-          setBalanceData(container.balanceOverTime.balanceOverTimePoints);
+          setBalanceData(container.balanceOverTime);
         }
       } catch (error) {
         console.error('Error fetching balance chart data:', error);

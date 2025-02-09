@@ -11,16 +11,16 @@ const MonthlyExpenses = () => {
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const response = await axios.get('/api/chartContainers/get', {
+        const response = await axios.get('http://localhost:3000/api/users/charts/get', {
           params: { email },
         });
         const container = response.data;
         if (
           container &&
-          container.balanceOverTime &&
-          Array.isArray(container.balanceOverTime.balanceOverTimePoints)
+          container.accountBalanceOverTime &&
+          Array.isArray(container.accountBalanceOverTime)
         ) {
-          let points = container.balanceOverTime.balanceOverTimePoints;
+          let points = container.accountBalanceOverTime;
           points.sort((a, b) => new Date(a.date) - new Date(b.date));
 
           const labels = [];
