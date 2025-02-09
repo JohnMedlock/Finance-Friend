@@ -12,45 +12,49 @@ Financial Helper is a full-stack application that combines artificial intelligen
 
 ## Features
 
-- **AI Financial Advisor**  
-  - Customize your personal AI advisor  
-  - Receive tailored financial guidance through natural conversations  
+- **AI Financial Advisor**
+  - Customize your personal AI advisor
+  - Receive tailored financial guidance through natural conversations
   - Engage with a 3D character for real-time interactions
 
-- **Smart Dashboard**  
-  - Interactive charts and data visualization  
-  - Real-time financial analytics  
+- **Smart Dashboard**
+  - Interactive charts and data visualization
+  - Real-time financial analytics
   - Portfolio performance tracking
 
-- **Goal Management**  
-  - Set and track financial goals  
-  - Intelligent progress monitoring  
+- **Goal Management**
+  - Set and track financial goals
+  - Intelligent progress monitoring
   - Personalized achievement strategies
 
-- **Secure Platform**  
-  - JWT authentication  
-  - Protected API routes  
+- **Secure Platform**
+  - JWT authentication
+  - Protected API routes
   - Encrypted data transmission
 
 ---
 
 ## Tech Stack
 
-**Frontend**  
-- [React](https://reactjs.org/) for UI development  
-- [Three.js](https://threejs.org/) for 3D rendering  
-- [Framer Motion](https://www.framer.com/motion/) for animations  
+**Frontend**
+- [React](https://reactjs.org/) for UI development
+- [Three.js](https://threejs.org/) for 3D rendering
+- [Framer Motion](https://www.framer.com/motion/) for animations
 - [Axios](https://axios-http.com/) for API communication
 
-**Backend**  
-- [Node.js](https://nodejs.org/) for the runtime environment  
-- [Express.js](https://expressjs.com/) for the web framework  
-- [MongoDB](https://www.mongodb.com/) for the database  
+**Backend**
+- [Node.js](https://nodejs.org/) for the runtime environment
+- [Express.js](https://expressjs.com/) for the web framework
+- [MongoDB](https://www.mongodb.com/) for the database
 - [JSON Web Tokens (JWT)](https://jwt.io/) for authentication
+- [Meshy](https://meshy.ai/) for 3D model generation
+- [OpenAI API](https://openai.com/api/) for natural language processing and AI interactions
+- [Google Cloud Vision API](https://cloud.google.com/vision) for image analysis
+- [Google Cloud Storage](https://cloud.google.com/storage) for file storage
 
-**AI/ML**  
-- Custom AI models for financial advice  
-- Natural Language Processing  
+**AI/ML**
+- Custom AI models for financial advice
+- Natural Language Processing
 - 3D character generation
 
 ---
@@ -59,8 +63,8 @@ Financial Helper is a full-stack application that combines artificial intelligen
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v14 or higher)  
-- [MongoDB](https://www.mongodb.com/)  
+- [Node.js](https://nodejs.org/) (v14 or higher)
+- [MongoDB](https://www.mongodb.com/)
 - npm (included with Node.js) or [Yarn](https://classic.yarnpkg.com/)
 
 ### Installation
@@ -113,28 +117,28 @@ After both servers start, you can access:
 ## API Endpoints
 
 ### Public Routes
-- `POST /register` → User registration  
+- `POST /register` → User registration
 - `POST /login` → User authentication
 
 ### Protected Routes
-- `GET /api/users/models/getModelsByUser/:email` → Get user's AI models  
-- `POST /api/textTo3D` → Generate 3D character from text  
+- `GET /api/users/models/getModelsByUser/:email` → Get user's AI models
+- `POST /api/textTo3D` → Generate 3D character from text
 - Additional financial and portfolio management endpoints
 
 ---
 
 ## Contributing
 
-1. Fork the repository  
-2. Create your feature branch:  
+1. Fork the repository
+2. Create your feature branch:
    ```bash
    git checkout -b feature/AmazingFeature
    ```
-3. Commit your changes:  
+3. Commit your changes:
    ```bash
    git commit -m "Add some AmazingFeature"
    ```
-4. Push to the branch:  
+4. Push to the branch:
    ```bash
    git push origin feature/AmazingFeature
    ```
@@ -150,8 +154,8 @@ This project is licensed under the MIT License – see the [LICENSE](./LICENSE) 
 
 ## Acknowledgments
 
-- [React](https://reactjs.org/) Community  
-- [Three.js](https://threejs.org/) Community for 3D rendering  
-- [MongoDB](https://www.mongodb.com/) team for database solutions  
-- [Node.js](https://nodejs.org/) & [Express](https://expressjs.com/) for the backend  
+- [React](https://reactjs.org/) Community
+- [Three.js](https://threejs.org/) Community for 3D rendering
+- [MongoDB](https://www.mongodb.com/) team for database solutions
+- [Node.js](https://nodejs.org/) & [Express](https://expressjs.com/) for the backend
 - Contributors and maintainers
