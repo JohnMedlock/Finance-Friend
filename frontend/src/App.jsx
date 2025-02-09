@@ -1,6 +1,8 @@
 import { AnimatePresence } from 'framer-motion';
 import React, { Suspense, lazy } from 'react';
 import { Navigate, Route, HashRouter as Router, Routes } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
+import { AuthProvider } from './context/AuthContext.jsx';
 
 // Styles
 import './App.css';
@@ -22,36 +24,39 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <Header />
-        <Suspense 
-          fallback={
-            <div className="loading-container">
-              <Loading />
-            </div>
-          }
-        >
-          <AnimatePresence mode="wait">
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignupPage />} />
+    <AuthProvider>
+      <Router>
+        <div className="app">
+          <Header />
+          <Suspense 
+            fallback={
+              <div className="loading-container">
+                <Loading />
+              </div>
+            }
+          >
+            <AnimatePresence mode="wait">
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
 
-                <Route path="/dashboard" element={<FinancialDashboard />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/ai-character" element={<AICharacterPage />} />
+                {/* Private Routes */}
+                <Route path="/dashboard" element={<PrivateRoute element={<FinancialDashboard />} />} />
+                <Route path="/profile" element={<PrivateRoute element={<ProfilePage />} />} />
+                <Route path="/ai-character" element={<PrivateRoute element={<AICharacterPage />} />} />
 
-              {/* Error Routes */}
-              <Route path="/404" element={<NotFoundPage />} />
-              <Route path="*" element={<Navigate to="/404" replace />} />
-            </Routes>
-          </AnimatePresence>
-        </Suspense>
-        <Footer />
-      </div>
-    </Router>
+                {/* Error Routes */}
+                <Route path="/404" element={<NotFoundPage />} />
+                <Route path="*" element={<Navigate to="/404" replace />} />
+              </Routes>
+            </AnimatePresence>
+          </Suspense>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

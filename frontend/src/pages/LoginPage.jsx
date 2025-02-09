@@ -1,18 +1,38 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext.jsx';
 import './LoginPage.css';
 import './SignupPage.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Add login logic here
-    console.log('Logging in with', email, password);
-    navigate('/dashboard'); // Redirect to dashboard after login
+    try {
+      const response = await axios.post('http://localhost:3000/login', {
+        email,
+        password,
+      });
+
+      if (response.data.jwt) {
+        console.log('Login successful!');
+        console.log('JWT Token:', response.data.jwt);
+        login(response.data.jwt); // Use the login function from AuthContext
+        navigate('/dashboard'); // Redirect to dashboard after login
+      } else {
+        console.log('Login failed:', response.data.message || response.data.error);
+        setError(response.data.message || 'Login failed');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error.response?.data || error.message);
+      setError(error.response?.data?.message || 'An error occurred during login');
+    }
   };
 
   return (
@@ -20,6 +40,7 @@ const LoginPage = () => {
       <div className="main-content">
         <div className="form-container">
           <h1>Login</h1>
+          {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleLogin}>
             <div>
               <label>Email:</label>
