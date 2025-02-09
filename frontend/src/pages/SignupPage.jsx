@@ -26,18 +26,11 @@ const SignupPage = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('password', password);
-      if (picture) {
-        formData.append('picture', picture);
-      }
-
-      const response = await axios.post('http://localhost:3000/register', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const response = await axios.post('/register', {
+        name,
+        email,
+        password,
+        picture
       });
       
       console.log('User created successfully!', response.data);

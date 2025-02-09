@@ -30,9 +30,9 @@ app.use('/api', authenticateToken, protectedRoutes);
     await mongoose.connect(URI);
     console.log('Mongoose connected.');
 
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
-    });
+    // app.listen(PORT, () => {
+    //   console.log(`Server running on http://localhost:${PORT}`);
+    // });
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
   }

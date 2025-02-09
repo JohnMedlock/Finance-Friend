@@ -4,7 +4,7 @@ import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import { Vector3, Euler, RGBA_ASTC_10x10_Format } from 'three';
 import './Profile3D.css';
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = '/api';
 
 // Model Component
 function Model({ onResetRotation, modelData, ...props }) {
