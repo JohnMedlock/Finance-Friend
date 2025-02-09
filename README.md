@@ -96,53 +96,21 @@ JWT_SECRET=your_jwt_secret
 
 5. Start the development servers:
 
-**Backend**  
+**Backend**
 ```bash
 cd backend
 npm run dev
 ```
 
-**Frontend**  
+**Frontend**
 ```bash
 cd frontend
 npm run dev
 ```
 
-After both servers start, you can access:  
-- Frontend: [http://localhost:5173](http://localhost:5173)  
+After both servers start, you can access:
+- Frontend: [http://localhost:5173](http://localhost:5173)
 - Backend: [http://localhost:3000](http://localhost:3000)
-
----
-
-## API Endpoints
-
-### Public Routes
-- `POST /register` → User registration
-- `POST /login` → User authentication
-
-### Protected Routes
-- `GET /api/users/models/getModelsByUser/:email` → Get user's AI models
-- `POST /api/textTo3D` → Generate 3D character from text
-- Additional financial and portfolio management endpoints
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch:
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add some AmazingFeature"
-   ```
-4. Push to the branch:
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
-5. Open a Pull Request
 
 ---
 
