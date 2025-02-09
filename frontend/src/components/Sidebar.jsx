@@ -255,7 +255,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="picture">
-        <Profile3D modelName={aiCharacter}/>
+        <Profile3D key={aiCharacter} modelName={aiCharacter}/>
       </div>
 
       <div className="chat-log">
