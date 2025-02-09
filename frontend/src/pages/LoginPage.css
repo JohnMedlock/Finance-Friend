@@ -148,3 +148,9 @@ button:hover {
 .sign-up-callout {
   margin: 0;
 }
+
+.error-message {
+  color: red;
+  margin-bottom: 20px;
+  font-weight: bold;
+}

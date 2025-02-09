@@ -12,7 +12,9 @@
   "dependencies": {
     "@auth0/auth0-react": "^2.3.0",
     "@react-three/fiber": "^8.17.14",
+    "axios": "^1.7.9",
     "chart.js": "^4.4.7",
+    "cors": "^2.8.5",
     "framer-motion": "^12.4.1",
     "frontend": "file:",
     "react": "^18.3.1",
