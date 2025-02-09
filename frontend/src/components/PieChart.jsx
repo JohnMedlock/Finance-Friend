@@ -11,7 +11,7 @@ const PieChart = () => {
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const url = `/api/users/charts/get?email=${email}`;
+        const url = `http://localhost:3000/api/users/charts/get?email=${email}`;
 
         // Attach the bearer token in the request headers
         const response = await fetch(url, {

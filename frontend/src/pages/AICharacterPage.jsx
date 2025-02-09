@@ -5,7 +5,7 @@ import { Profile3D } from '../components/Profile3D';
 
 // Since the server routes are POST /api/add and GET /api/users/get/:email:
 // we point the base URL to /api.
-const API_URL = '/api';
+const API_URL = 'http://localhost:3000/api';
 
 const AICharacterPage = () => {
   const [characterName, setCharacterName] = useState('');
