@@ -7,7 +7,7 @@ const aiCharacter = localStorage.getItem('selectedCharacter');
 
 const Sidebar = () => {
   const [messages, setMessages] = useState([
-    { id: 1, user: aiCharacter, text: 'Hello! How can I help you today?' }
+    { id: 1, user: aiCharacter, text: 'Hello! How can I help you today?' },
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const messagesEndRef = useRef(null);
@@ -29,7 +29,7 @@ const Sidebar = () => {
       id: messages.length + 1,
       user: 'User',
       text: inputMessage.trim(),
-      timestamp: new Date().toLocaleTimeString()
+      timestamp: new Date().toLocaleTimeString(),
     };
 
     setMessages([...messages, newMessage]);
@@ -37,38 +37,40 @@ const Sidebar = () => {
 
     if (input) {
       const formData = new FormData();
-        formData.append('prompt', input);
-        formData.append('Name', aiCharacter);
-    
-        fetch('http://localhost:3000/api/chat', { 
-          method: 'POST',
-          body: formData,
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      formData.append('prompt', input);
+      formData.append('Name', aiCharacter);
+
+      fetch('http://localhost:3000/api/chat', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json(); // Return the promise here
+          } else {
+            throw new Error('Message upload failed');
           }
         })
-          .then(response => {
-            if (response.ok) {
-              return response.json(); // Return the promise here
-            } else {
-              throw new Error('Message upload failed');
-            }
-          })
-          .then(parsedData => {
-            console.log('Message uploaded successfully');
-            console.log('Parsed data:', parsedData);
-            
-            setMessages(prevMessages => [
-              ...prevMessages, 
-              { id: prevMessages.length + 1, user: aiCharacter, text: parsedData.response }
-            ]);
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-        
-    }
+        .then((parsedData) => {
+          console.log('Message uploaded successfully');
+          console.log('Parsed data:', parsedData);
 
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              id: prevMessages.length + 1,
+              user: aiCharacter,
+              text: parsedData.response,
+            },
+          ]);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
   };
 
   const handleSendFile = (e) => {
@@ -78,38 +80,40 @@ const Sidebar = () => {
 
     if (input) {
       const formData = new FormData();
-        formData.append('file', input);
-        formData.append('name', 'Snoop Dogg');
-    
-        fetch('http://localhost:3000/api/parse-bank-statement', { 
-          method: 'POST',
-          body: formData,
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      formData.append('file', input);
+      formData.append('name', 'Snoop Dogg');
+
+      fetch('http://localhost:3000/api/parse-bank-statement', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json(); // Return the promise here
+          } else {
+            throw new Error('File upload failed');
           }
         })
-          .then(response => {
-            if (response.ok) {
-              return response.json(); // Return the promise here
-            } else {
-              throw new Error('File upload failed');
-            }
-          })
-          .then(parsedData => {
-            console.log('File uploaded successfully');
-            console.log('Parsed data:', parsedData);
-            
-            setMessages(prevMessages => [
-              ...prevMessages, 
-              { id: prevMessages.length + 1, user: 'AI Assistant', text: parsedData.parsedData }
-            ]);
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-        
-    }
+        .then((parsedData) => {
+          console.log('File uploaded successfully');
+          console.log('Parsed data:', parsedData);
 
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              id: prevMessages.length + 1,
+              user: 'AI Assistant',
+              text: parsedData.parsedData,
+            },
+          ]);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
   };
 
   const handleKeyPress = (e) => {
@@ -124,13 +128,13 @@ const Sidebar = () => {
       <div className="picture">
         <Profile3D />
       </div>
-      
+
       <div className="chat-log">
         <h2>Chat with {aiCharacter}</h2>
         <div className="messages">
           {messages.map((message) => (
-            <div 
-              key={message.id} 
+            <div
+              key={message.id}
               className={`message ${message.user === 'User' ? 'user-message' : 'ai-message'}`}
             >
               <div className="message-header">
@@ -146,12 +150,16 @@ const Sidebar = () => {
         </div>
       </div>
 
-      
       <form className="chat-input" onSubmit={handleSendMessage}>
         <label htmlFor="file-input" className="upload-button">
           <img src={paperclip} alt="Attach file" />
         </label>
-        <input type="file" id="file-input" onInput={handleSendFile} style={{ display: "none" }} />
+        <input
+          type="file"
+          id="file-input"
+          onInput={handleSendFile}
+          style={{ display: 'none' }}
+        />
         <textarea
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
@@ -159,8 +167,8 @@ const Sidebar = () => {
           placeholder="Type your message here..."
           rows="3"
         />
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className="send-button"
           disabled={!inputMessage.trim()}
         >

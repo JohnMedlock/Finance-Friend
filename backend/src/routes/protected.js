@@ -6,6 +6,8 @@ import userRoutes from './userRoutes/users.js';
 import { uploadPdfBufferToGCS, ocrPdfInGCS } from '../services/ocr.js';
 import chatPDF, { chat } from '../services/chatbot.js';
 import User from '../schemas/User.js';
+import Model from '../schemas/Model.js';
+import axios from 'axios';
 
 const router = express.Router();
 
@@ -152,6 +154,43 @@ router.post('/update-profile', upload.single('file'), async (req, res) => {
   } catch (error) {
     console.error('Error updating user:', error);
     return res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/download', async (req, res) => {
+  try {
+    const email = req.body.email;
+    const modelName = req.body.modelName;
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'No user found.' });
+    } // if
+
+    const model = await Model.findOne({
+      userId: user._id,
+      modelName: modelName,
+    });
+
+    if (!model) {
+      return res.status(404).json({ message: 'No model found.' });
+    } // if
+
+    // Retrieve the GLB file URL from the model document
+    const fileUrl = model.link;
+
+    // Download the GLB file from the remote URL using Axios
+    const fileResponse = await axios.get(fileUrl, {
+      responseType: 'arraybuffer',
+    });
+    const fileBuffer = Buffer.from(fileResponse.data);
+
+    // Set the content type for a GLB file and send the binary data
+    res.setHeader('Content-Type', 'model/gltf-binary');
+    return res.send(fileBuffer);
+  } catch (error) {
+    console.error('Error downloading model file:', error);
+    return res.status(500).json({ message: error.message });
   }
 });
 

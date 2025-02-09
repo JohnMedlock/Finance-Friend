@@ -1,21 +1,55 @@
-import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto'; // Import Chart.js
+import React, { useEffect, useRef, useState } from 'react';
+import Chart from 'chart.js/auto';
+import axios from 'axios';
 import './Dashboard.css';
 
 const BalanceGraph = () => {
   const chartRef = useRef(null);
+  const [balanceData, setBalanceData] = useState([]);
+  const email = localStorage.getItem('email');
 
   useEffect(() => {
+    const fetchChartData = async () => {
+      try {
+        const response = await axios.get('/api/chartContainers/get', {
+          params: { email },
+        });
+        const container = response.data;
+        if (
+          container &&
+          container.balanceOverTime &&
+          Array.isArray(container.balanceOverTime.balanceOverTimePoints)
+        ) {
+          setBalanceData(container.balanceOverTime.balanceOverTimePoints);
+        }
+      } catch (error) {
+        console.error('Error fetching balance chart data:', error);
+      }
+    };
+
+    if (email) {
+      fetchChartData();
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (!balanceData || balanceData.length === 0) return;
+
     const ctx = chartRef.current.getContext('2d');
-    const myPieChart = new Chart(ctx, {
-      type: 'line',  // Specify Pie chart type
+    const labels = balanceData.map((point) => point.date);
+    const data = balanceData.map((point) => point.balance);
+
+    const myLineChart = new Chart(ctx, {
+      type: 'line',
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels,
         datasets: [
           {
-            label: 'Color Distribution',
-            data: [1200, 1900, 300, 500, 800, 500],
+            label: 'Balance Over Time',
+            data,
             borderWidth: 1,
+            borderColor: '#5f259f',
+            backgroundColor: 'rgba(95, 37, 159, 0.2)',
           },
         ],
       },
@@ -23,24 +57,24 @@ const BalanceGraph = () => {
         maintainAspectRatio: false,
         responsive: true,
         scales: {
-            x: {
-                ticks: {
-                    color: '#5f259f',
-                    font: {
-                        size: 14,
-                        weight: 'bold',
-                    }
-                },
+          x: {
+            ticks: {
+              color: '#5f259f',
+              font: {
+                size: 14,
+                weight: 'bold',
+              },
             },
-            y: {
-                ticks: {
-                    color: '#5f259f',
-                    font: {
-                        size: 14,
-                        weight: 'bold',
-                    }
-                },
+          },
+          y: {
+            ticks: {
+              color: '#5f259f',
+              font: {
+                size: 14,
+                weight: 'bold',
+              },
             },
+          },
         },
         plugins: {
           legend: {
@@ -48,22 +82,22 @@ const BalanceGraph = () => {
           },
           title: {
             display: false,
-            text: 'Pie Chart Example',
           },
         },
       },
     });
 
+    // Cleanup the chart instance when the component unmounts or before re-creating it.
     return () => {
-      myPieChart.destroy(); // Clean up the chart instance on component unmount
+      myLineChart.destroy();
     };
-  }, []);
+  }, [balanceData]);
 
   return (
-        <div className="balances-chart-container">
-            <canvas className="balances-chart" ref={chartRef} />
-        </div>
-    );
+    <div className="balances-chart-container">
+      <canvas className="balances-chart" ref={chartRef} />
+    </div>
+  );
 };
 
 export default BalanceGraph;

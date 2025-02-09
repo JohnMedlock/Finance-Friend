@@ -2,6 +2,7 @@ import React from 'react';
 import './Dashboard.css';
 import PieChart from './PieChart';
 import BalanceGraph from './BalanceGraph';
+import MonthlyExpenses from './MonthlyExpenses';
 
 const Dashboard = () => {
   return (
@@ -14,7 +15,7 @@ const Dashboard = () => {
           </div>
           <div className="card">
             <h2>Monthly Expenses</h2>
-            <p>$2,000</p>
+            <MonthlyExpenses></MonthlyExpenses>
           </div>
           <div className="card">
             <h2>Investments</h2>
