@@ -33,6 +33,38 @@ const Sidebar = () => {
     setInputMessage('');
   };
 
+  const handleSendFile = (e) => {
+    e.preventDefault();
+
+    const input = document.getElementById('file-input').files[0];
+
+    if (input) {
+      const formData = new FormData();
+        formData.append('file', input);
+    
+        fetch('/parse-bank-data', { // Replace '/upload' with your server endpoint
+          method: 'POST',
+          body: formData,
+        })
+        .then(response => {
+          if (response.ok) {
+            parsedData = response.json();
+            console.log('File uploaded successfully');
+            setMessages([...messages, { id: messages, user: 'User', text: parsedData.commentary }]);
+          } else {
+            console.error('File upload failed');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+
+    const file = 
+
+    const incomingMessage = fetch('http://localhost:3000/parse-bank-statement', {});
+  };
+
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
