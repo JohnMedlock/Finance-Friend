@@ -24,10 +24,10 @@ const AICharacterPage = () => {
         }
 
         // GET /api/users/get/:email
-        const userResponse = await axios.get(`${API_URL}/users/get/${email}`, {
+        const userResponse = await axios.get(`${API_URL}/users/models/getModelsByUser/` + email, {
           headers: {
             Authorization: `Bearer ${token}`
-          }
+          },
         });
 
         const modelsArray = Array.isArray(userResponse.data.models) ? userResponse.data.models : [userResponse.data.models];
@@ -57,19 +57,17 @@ const AICharacterPage = () => {
       return;
     }
 
-    // POST /api/add
-    const newCharacter = {
-      email,
-      modelName: characterName,
-      link: characterPrompt,
-    };
-
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`${API_URL}/add`, newCharacter, {
+      const response = await axios.post(`${API_URL}/textTo3D`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        body: {
+          email,
+          modelName: characterName,
+          prompt: characterPrompt,
+        }
       });
       setCharacters([...characters, response.data]);
       setCharacterName('');
