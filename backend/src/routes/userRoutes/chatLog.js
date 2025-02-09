@@ -19,22 +19,21 @@ try {
     } // if
 
     const uid = user._id;
-    const mid = model._id;
 
-    const stordLog = new ChatLog ({ 
+    const storedLog = new ChatLog ({ 
         userId: uid, 
-        modelId: mid,
+        modelName: modelName,
         messageContent: content,
         sender: sender
     });
 
-    await newModel.save();
+    await storedLog.save();
 
-    res.status(201).json(newModel);
+    res.status(201).json(storedLog);
     } catch (error) {
     res.status(500).json({ message: error });
 } // try
-}); // addModel
+}); // store
 
 router.get('/get', async (req, res) => {
 try {
