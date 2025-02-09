@@ -1,7 +1,7 @@
 import express from 'express'
 import User from '../../schemas/User.js'
-import modelRouter from './models.js'
 import chartContainerRouter from './chartContainers.js'
+import modelRouter from './models.js'
 
 const router = express.Router()
 
@@ -36,7 +36,12 @@ router.get('/get/:email', async (req, res) => {
       return;
     } // if
 
-    res.status(200).json(user);
+    const userModels = await ChartContainer.find({ userId: user._id });
+
+    res.status(200).json({
+      user: user,
+      models: userModels 
+    });
   } catch (error) {
     res.status(500).json(error);
   } // try

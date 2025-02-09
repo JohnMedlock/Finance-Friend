@@ -1,24 +1,87 @@
-import React from 'react';
-import profileImage from '../assets/beautiful.jpg';
+import React, { useEffect, useRef, useState } from 'react';
+import { Profile3D } from './Profile3D';
 import './Sidebar.css';
 
 const Sidebar = () => {
+  const [messages, setMessages] = useState([
+    { id: 1, user: 'AI Assistant', text: 'Hello! How can I help you today?' }
+  ]);
+  const [inputMessage, setInputMessage] = useState('');
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (!inputMessage.trim()) return;
+
+    const newMessage = {
+      id: messages.length + 1,
+      user: 'User',
+      text: inputMessage.trim(),
+      timestamp: new Date().toLocaleTimeString()
+    };
+
+    setMessages([...messages, newMessage]);
+    setInputMessage('');
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage(e);
+    }
+  };
+
   return (
     <div className="sidebar">
       <div className="picture">
-        <img src={profileImage} alt="Profile" />
+        <Profile3D />
       </div>
+      
       <div className="chat-log">
-        <h2>Chat Log</h2>
+        <h2>Chat with AI Assistant</h2>
         <div className="messages">
-          {/* Example messages */}
-          <p>User1: Hello!</p>
-          <p>User2: Hi there!</p>
+          {messages.map((message) => (
+            <div 
+              key={message.id} 
+              className={`message ${message.user === 'User' ? 'user-message' : 'ai-message'}`}
+            >
+              <div className="message-header">
+                <span className="message-user">{message.user}</span>
+                {message.timestamp && (
+                  <span className="message-time">{message.timestamp}</span>
+                )}
+              </div>
+              <p className="message-text">{message.text}</p>
+            </div>
+          ))}
+          <div ref={messagesEndRef} />
         </div>
       </div>
-      <div className="chat-input">
-        <textarea placeholder="Type your message here..."></textarea>
-      </div>
+
+      <form className="chat-input" onSubmit={handleSendMessage}>
+        <textarea
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="Type your message here..."
+          rows="3"
+        />
+        <button 
+          type="submit" 
+          className="send-button"
+          disabled={!inputMessage.trim()}
+        >
+          Send
+        </button>
+      </form>
     </div>
   );
 };
