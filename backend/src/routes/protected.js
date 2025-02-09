@@ -4,7 +4,7 @@ import multer from 'multer';
 import textTo3D from '../services/textTo3D.js';
 import userRoutes from './userRoutes/users.js';
 import { uploadPdfBufferToGCS, ocrPdfInGCS } from '../services/ocr.js';
-import chat from '../services/chatbot.js';
+import chatPDF, { chat } from '../services/chatbot.js';
 import User from '../schemas/User.js';
 
 const router = express.Router();
@@ -15,13 +15,16 @@ router.get('/', (req, res) => {
 
 router.use('/users', userRoutes);
 
-router.get('/textTo3D', async (req, res) => {
+router.post('/textTo3D', async (req, res) => {
   try {
-    const glbBuffer = await textTo3D('Snoop Dog head close up');
+    const { prompt } = req.body;
+    if (!prompt) {
+      return res.status(400).json({ error: 'Prompt is required.' });
+    }
 
+    const glbBuffer = await textTo3D(prompt);
     res.setHeader('Content-Type', 'model/gltf-binary');
-
-    return res.send(glbBuffer);
+    res.send(glbBuffer);
   } catch (error) {
     console.error('Error in /textTo3D endpoint:', error);
     return res.status(500).json({ error: error.message });
@@ -37,6 +40,11 @@ router.post(
     try {
       if (!req.file) {
         return res.status(400).json({ error: 'No PDF file provided.' });
+      }
+
+      const { name } = req.body;
+      if (!name) {
+        return res.status(400).json({ error: 'Name is required.' });
       }
 
       const bucketName = 'financefriend';
@@ -57,8 +65,7 @@ router.post(
         gcsDestinationUri,
       );
 
-      const chatResponseString = await chat(bankStatementText, 'snoop dog');
-      console.log(chatResponseString);
+      const chatResponseString = await chatPDF(bankStatementText, name);
 
       let rawOutput = chatResponseString || '';
       rawOutput = rawOutput.replace(/```(json)?/g, '').replace(/```/g, '');
@@ -80,6 +87,22 @@ router.post(
     }
   },
 );
+
+router.post('/chat', async (req, res) => {
+  try {
+    const { prompt, name } = req.body;
+    if (!name) {
+      return res.status(400).json({ error: 'Name is required.' });
+    }
+
+    const response = await chat(prompt, name);
+
+    return res.status(200).json(response);
+  } catch (error) {
+    console.error('Error in /chat:', error);
+    return res.status(500).json({ error: error.message });
+  }
+});
 
 router.post('/update-profile', upload.single('file'), async (req, res) => {
   try {

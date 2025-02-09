@@ -5,9 +5,6 @@ const MESHY_BASE_URL = 'https://api.meshy.ai/openapi/v2/text-to-3d';
 const MAX_ATTEMPTS = 1000;
 const POLL_INTERVAL = 3000;
 
-/**
- * Polls the Meshy API until the task is SUCCEEDED or times out.
- */
 async function pollUntilComplete(
   taskID,
   headers,
@@ -42,7 +39,6 @@ export default async function textTo3D(prompt) {
     'Content-Type': 'application/json',
   };
 
-  // 1) Start a "preview" task
   let previewTaskID;
   try {
     const previewPayload = {
@@ -63,7 +59,6 @@ export default async function textTo3D(prompt) {
     throw error;
   }
 
-  // 2) Poll until the preview is complete
   try {
     const previewData = await pollUntilComplete(previewTaskID, headers);
     console.log('Preview completed:', previewData);
@@ -72,7 +67,6 @@ export default async function textTo3D(prompt) {
     throw error;
   }
 
-  // 3) Start a "refine" task
   let refineTaskID;
   try {
     const refinePayload = {
@@ -90,11 +84,9 @@ export default async function textTo3D(prompt) {
     throw error;
   }
 
-  // 4) Poll until refine completes
   let finalRes;
   try {
     await pollUntilComplete(refineTaskID, headers);
-    // 5) Retrieve the final 3D model data
     finalRes = await axios.get(`${MESHY_BASE_URL}/${refineTaskID}`, {
       headers,
     });
@@ -104,7 +96,6 @@ export default async function textTo3D(prompt) {
     throw error;
   }
 
-  // 6) Download the GLB from finalRes and return it as a Buffer
   const glbUrl = finalRes.data.model_urls?.glb;
   if (!glbUrl) throw new Error('No GLB URL found in final data.');
   console.log('GLB URL:', glbUrl);
@@ -116,7 +107,6 @@ export default async function textTo3D(prompt) {
     console.log(`Downloaded GLB size: ${glbResponse.data.byteLength} bytes`);
     const glbBuffer = Buffer.from(glbResponse.data);
 
-    // Return the binary GLB buffer directly
     return glbBuffer;
   } catch (error) {
     console.error('Error downloading GLB asset:', error);

@@ -5,12 +5,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
-export default async function chat(
-  bankStatementText,
-  personality = 'snoop dog',
-) {
+export default async function chatPDF(bankStatementText, personality) {
   const systemContent = `
-  You are a helpful financial assistant with the personality of snoop dog.
+  You are a helpful financial assistant with the personality of ${personality}.
   You must refer to the user in second person.
   The user will provide the text from a monthly bank statement (OCR extracted).
 
@@ -50,6 +47,31 @@ export default async function chat(
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o', // or whichever model you use
+    messages: [
+      { role: 'system', content: systemContent },
+      { role: 'user', content: userContent },
+    ],
+    store: true,
+  });
+  return completion.choices[0].message.content;
+}
+
+export async function chat(prompt, personality) {
+  const systemContent = `
+  You are a helpful financial assistant with the personality of ${personality}.
+  You must refer to the user in second person.
+`;
+
+  const userContent = `
+    Below is the user prompt:
+
+    ${[prompt]}
+
+    Please generate the message as specified above.
+  `;
+
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4o',
     messages: [
       { role: 'system', content: systemContent },
       { role: 'user', content: userContent },
