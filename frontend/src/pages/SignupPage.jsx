@@ -8,7 +8,6 @@ const SignupPage = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [picture, setPicture] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
