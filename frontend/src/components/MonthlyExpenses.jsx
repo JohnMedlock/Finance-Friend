@@ -7,18 +7,30 @@ const MonthlyExpenses = () => {
   const chartRef = useRef(null);
   const [chartData, setChartData] = useState(null);
   const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token'); // Retrieve the token from localStorage
 
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/users/charts/get', {
-          params: { email },
+        const url = `http://localhost:3000/api/users/charts/get?email=${email}`;
+
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         });
-        const container = response.data;
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const container = await response.json();
+
         if (
           container &&
-          container.accountBalanceOverTime &&
-          Array.isArray(container.accountBalanceOverTime)
+          container.accountBalanceOverTime
         ) {
           let points = container.accountBalanceOverTime;
           points.sort((a, b) => new Date(a.date) - new Date(b.date));

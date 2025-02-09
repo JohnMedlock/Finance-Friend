@@ -7,16 +7,26 @@ const BalanceGraph = () => {
   const chartRef = useRef(null);
   const [balanceData, setBalanceData] = useState([]);
   const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token'); // Retrieve the token from localStorage
 
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const url = `http://localhost:3000/api/users/charts/get`;
-
-        const response = await axios.get(url, {
-          params: { email },
+        const url = `http://localhost:3000/api/users/charts/get?email=${email}`;
+        
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         });
-        const container = response.data;
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const container = await response.json()
 
         if (
           container &&
