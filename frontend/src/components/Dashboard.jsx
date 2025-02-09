@@ -10,7 +10,7 @@ const Dashboard = () => {
       <div className="dashboard-content">
         <div className="dashboard-cards">
           <div className="card">
-            <h2>Investments</h2>
+            <h2>Expenses</h2>
             <PieChart />
           </div>
         </div>
