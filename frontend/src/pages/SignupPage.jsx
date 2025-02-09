@@ -79,19 +79,6 @@ const SignupPage = () => {
               />
             </div>
             <div className="file-upload-container">
-              <label>Profile Picture:</label>
-              <div className="upload-button-wrapper">
-                <button type="button" className="upload-button" onClick={() => document.getElementById('picture-upload').click()}>
-                  Choose File
-                </button>
-                <input
-                  id="picture-upload"
-                  type="file"
-                  onChange={handleFileChange}
-                  accept="image/*"
-                  style={{ display: 'none' }}
-                />
-              </div>
               {previewUrl && (
                 <div className="image-preview">
                   <img src={previewUrl} alt="Profile preview" />
