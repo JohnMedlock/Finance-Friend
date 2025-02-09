@@ -1,19 +1,39 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
-import axios from 'axios';
 
 const PieChart = () => {
   const chartRef = useRef(null);
   const [spendingCategories, setSpendingCategories] = useState([]);
+
   const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token'); // Retrieve the token from localStorage
 
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const response = await axios.get('/api/chartContainers/get', {
-          params: { email },
+        const url = `http://localhost:3000/api/users/charts/get?email=${email}`;
+
+        // Attach the bearer token in the request headers
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         });
-        const container = response.data;
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const container = await response.json();
+        if (
+          !container.spendingSectors ||
+          !container.spendingSectors.spendingCategories
+        ) {
+          console.warn('spendingSectors missing in container data:', container);
+          return;
+        }
         setSpendingCategories(container.spendingSectors.spendingCategories);
       } catch (error) {
         console.error('Error fetching chart data:', error);
@@ -23,7 +43,7 @@ const PieChart = () => {
     if (email) {
       fetchChartData();
     }
-  }, [email]);
+  }, [email, token]);
 
   useEffect(() => {
     if (!spendingCategories || spendingCategories.length === 0) return;
@@ -62,7 +82,6 @@ const PieChart = () => {
           },
           title: {
             display: false,
-            text: 'Spending Chart',
           },
         },
       },

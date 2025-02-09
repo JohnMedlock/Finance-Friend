@@ -13,27 +13,29 @@ const PORT = process.env.PORT || 3000;
 const URI = process.env.MONGO_URI || '';
 
 // Use CORS middleware
-app.use(cors({
+app.use(
+  cors({
     origin: 'http://localhost:5173',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
-}));
+  }),
+);
 
-app.use(express.json());;
-app.use('/', publicRoutes);;
-app.use('/api', authenticateToken, protectedRoutes);;
+app.use(express.json());
+app.use('/', publicRoutes);
+app.use('/api', authenticateToken, protectedRoutes);
 
 (async () => {
-    try {
-        await mongoose.connect(URI);
-        console.log('Mongoose connected.');
+  try {
+    await mongoose.connect(URI);
+    console.log('Mongoose connected.');
 
-        app.listen(PORT, () => {
-            console.log(`Server running on http://localhost:${PORT}`);
-        });
-    } catch (error) {
-        console.error("Error connecting to MongoDB:", error);
-    }
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+  }
 })();
 
 /*
