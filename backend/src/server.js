@@ -24,6 +24,6 @@ app.listen(PORT, () => {
 
 /*
 await mongoose.disconnect()
-              .then(() => console.log('MongoDB connection closed'))
-              .catch((err) => console.log('Error while closing connection:', err));
+    .then(() => console.log('MongoDB connection closed'))
+    .catch((err) => console.log('Error while closing connection:', err));
 */
