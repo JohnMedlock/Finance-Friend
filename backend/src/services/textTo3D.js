@@ -1,5 +1,7 @@
 // textTo3D.js
 import axios from 'axios';
+import Model from '../schemas/Model.js';
+import User from '../schemas/User.js';
 
 const MESHY_BASE_URL = 'https://api.meshy.ai/openapi/v2/text-to-3d';
 const MAX_ATTEMPTS = 1000;
@@ -33,7 +35,7 @@ async function pollUntilComplete(
   );
 }
 
-export default async function textTo3D(prompt) {
+export default async function textTo3D(email, prompt, modelName) {
   const headers = {
     Authorization: `Bearer ${process.env.MESHY_API_KEY}`,
     'Content-Type': 'application/json',
@@ -100,7 +102,20 @@ export default async function textTo3D(prompt) {
   if (!glbUrl) throw new Error('No GLB URL found in final data.');
   console.log('GLB URL:', glbUrl);
 
-  try {
+  const user = await User.findOne({ email });
+  const model = await Model.findOne({ userId: user._id, modelName: modelName });
+
+  // TODO: fix???
+  if (!user || model) {
+    console.error("Either model exists or user does not exist. sorry for bad error lmao");
+  } else {
+    const uid = user._id;
+    const newModel = new Model ({ userId: uid, modelName: modelName, link: glbUrl });
+    await newModel.save();
+  } // if
+
+
+  try {    
     const glbResponse = await axios.get(glbUrl, {
       responseType: 'arraybuffer',
     });
