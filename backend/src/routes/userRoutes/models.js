@@ -30,6 +30,29 @@ try {
 } // try
 }); // addModel
 
+
+router.get('/getModelsByUser/:email', async (req, res) => {
+    try {
+        const email = req.params.email;
+        const user = await User.findOne({ email: email });
+    
+        if (!user) {
+            return res.status(404).json({ message: "No user found." });
+        } // if
+    
+        const models = await Model.find({ userId: user._id });
+        
+        if (!models.length) {
+            return res.status(404).json({ message: "No model found." });
+        } // if
+    
+        res.status(200).json(models);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    } // try
+    }); // getModel
+
+    
 router.get('/get', async (req, res) => {
 try {
     const { email, modelName } = req.query;
