@@ -1,12 +1,11 @@
-import express from 'express';
-import { auth } from 'express-openid-connect';
-import { generateToken } from '../auth/authUtils.js';
 import bcrypt from 'bcryptjs';
-import User from '../schemas/User.js';
-import textTo3D from '../services/textTo3D.js';
-import { uploadPdfBufferToGCS, ocrPdfInGCS } from '../services/ocr.js';
-import chat from '../services/chatbot.js';
+import express from 'express';
 import multer from 'multer';
+import { generateToken } from '../auth/authUtils.js';
+import User from '../schemas/User.js';
+import chat from '../services/chatbot.js';
+import { ocrPdfInGCS, uploadPdfBufferToGCS } from '../services/ocr.js';
+import textTo3D from '../services/textTo3D.js';
 
 const router = express.Router();
 
@@ -17,7 +16,7 @@ router.post('/register', async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
-    } // if
+    }
 
     const newUser = new User({
       name,
@@ -34,27 +33,27 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(400).json({ message: 'Invalid email or password' });
-    } // if
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid email or password' });
-    } // if
+    }
 
     const token = generateToken(user);
 
     res.json({ isLoggedIn: true, user, jwt: token });
   } catch (error) {
     res.status(500).json({ message: error.message });
-  } // try
+  }
 });
 
 const upload = multer({ storage: multer.memoryStorage() });

@@ -15,9 +15,10 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      // Using direct route without authentication
       const response = await axios.post('http://localhost:3000/login', {
         email,
-        password,
+        password
       });
 
       if (response.data.jwt) {
@@ -25,10 +26,9 @@ const LoginPage = () => {
         console.log('JWT Token:', response.data.jwt);
         localStorage.setItem('token', response.data.jwt);
         localStorage.setItem('email', email);
-        login(response.data.jwt); // Use the login function from AuthContext
-        navigate('/dashboard'); // Redirect to dashboard after login
+        login(response.data.jwt);
+        navigate('/dashboard');
       } else {
-        console.log('Login failed:', response.data.message || response.data.error);
         setError(response.data.message || 'Login failed');
       }
     } catch (error) {
