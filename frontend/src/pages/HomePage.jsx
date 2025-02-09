@@ -1,48 +1,67 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './HomePage.css';
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="home-page">
       <section className="hero-section">
         <div className="hero-content">
-          <h1 className="hero-title">Finance Friend</h1>
+          <h1 className="hero-title">
+            <span className="gradient-text">Finance Friend</span>
+          </h1>
           <p className="hero-subtitle">
-            Simplify your financial life with modern tools and personalized advice.
+            Your AI-powered companion for smarter financial decisions
           </p>
-          <button className="hero-cta">Get Started</button>
         </div>
       </section>
 
-      {/* Main Content */}
       <main className="page-wrapper">
-        <div className="container">
-          <section className="info-section">
-            <h2>How It Works</h2>
-            <p>Stay on top of your finances with features designed to streamline tracking:</p>
-            <ul>
-              <li><strong>Dashboard:</strong> See all your income and expenses in one place.</li>
-              <li><strong>Profile:</strong> Customize your experience and set financial goals.</li>
-              <li><strong>AI Character:</strong> Get personalized insights for smarter money management.</li>
-            </ul>
-          </section>
+        <section className="features-grid">
+          <div className="feature-card">
+            <div className="feature-icon">📊</div>
+            <h3>Smart Dashboard</h3>
+            <p>Visualize your financial health with interactive charts and real-time analytics</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">🤖</div>
+            <h3>AI Advisor</h3>
+            <p>Get personalized financial advice from your customized AI character</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">🎯</div>
+            <h3>Goal Tracking</h3>
+            <p>Set and monitor your financial goals with intelligent progress tracking</p>
+          </div>
+        </section>
 
-          <section className="info-section bulleted">
-            <h2>Key Features</h2>
-            <ul>
-              <li>Automatic income and expense tracking</li>
-              <li>Goal-setting and progress monitoring</li>
-              <li>Actionable data-driven insights</li>
-              <li>Secure and straightforward interface</li>
-            </ul>
-          </section>
+        <section className="info-section">
+          <h2>Why Choose Finance Friend?</h2>
+          <div className="benefits-grid">
+            <div className="benefit-item">
+              <h4>Personalized Experience</h4>
+              <p>Create your own AI financial advisor that understands your unique needs</p>
+            </div>
+            <div className="benefit-item">
+              <h4>Data-Driven Insights</h4>
+              <p>Make informed decisions based on advanced analytics and AI recommendations</p>
+            </div>
+            <div className="benefit-item">
+              <h4>Easy Integration</h4>
+              <p>Seamlessly connect your accounts and start tracking instantly</p>
+            </div>
+          </div>
+        </section>
 
-          <section className="cta-section">
-            <h2>Ready to Start?</h2>
-            <p>Take control of your financial future with just a few clicks.</p>
-            <button>Sign Up</button>
-          </section>
-        </div>
+        <section className="cta-section">
+          <div className="cta-content">
+            <h2>Ready to Transform Your Financial Future?</h2>
+            <p>Join thousands of users who are taking control of their finances with AI assistance</p>
+            <Link to="/signup" className="cta-link">
+              Get Started Today →
+            </Link>
+          </div>
+        </section>
       </main>
     </div>
   );

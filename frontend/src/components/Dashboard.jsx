@@ -14,10 +14,6 @@ const Dashboard = () => {
             <BalanceGraph />
           </div>
           <div className="card">
-            <h2>Monthly Expenses</h2>
-            <MonthlyExpenses></MonthlyExpenses>
-          </div>
-          <div className="card">
             <h2>Investments</h2>
             <PieChart />
           </div>
