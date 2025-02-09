@@ -10,7 +10,7 @@ if (!JWT_SECRET) {
 
 export const generateToken = (user) => {
   return jwt.sign(
-    { sub: user.sub, email: user.email, name: user.name },
+    { id: user._id, email: user.email, name: user.name },
     JWT_SECRET,
     { expiresIn: '1h' },
   );
