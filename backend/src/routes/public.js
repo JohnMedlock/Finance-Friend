@@ -10,10 +10,9 @@ import multer from 'multer';
 
 const router = express.Router();
 
-// Register a new user
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, picture } = req.body;
+    const { name, email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -24,7 +23,6 @@ router.post('/register', async (req, res) => {
       name,
       email,
       password,
-      picture,
       updatedAt: new Date(),
     });
 
@@ -36,8 +34,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login user
-router.post('/login', async (req, res) => {
+router.get('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });

@@ -1,7 +1,8 @@
+// protected.js
 import express from 'express';
 import multer from 'multer';
 import textTo3D from '../services/textTo3D.js';
-import userRoutes from './users.js';
+import userRoutes from './userRoutes/users.js';
 import { uploadPdfBufferToGCS, ocrPdfInGCS } from '../services/ocr.js';
 import chat from '../services/chatbot.js';
 
@@ -13,13 +14,26 @@ router.get('/', (req, res) => {
 
 router.use('/users', userRoutes);
 
+// Example endpoint: returns the GLB file from Meshy
 router.get('/textTo3D', async (req, res) => {
-  const refine = await textTo3D('Realistic Snoop Dog head close up');
-  res.json(refine);
+  try {
+    const glbBuffer = await textTo3D('Snoop Dog head close up');
+
+    // Set appropriate content-type for GLB
+    res.setHeader('Content-Type', 'model/gltf-binary');
+
+    // Send the raw buffer
+    return res.send(glbBuffer);
+  } catch (error) {
+    console.error('Error in /textTo3D endpoint:', error);
+    return res.status(500).json({ error: error.message });
+  }
 });
 
+// Multer for file uploads
 const upload = multer({ storage: multer.memoryStorage() });
 
+// Example PDF OCR endpoint
 router.post(
   '/parse-bank-statement',
   upload.single('file'),
