@@ -57,16 +57,6 @@ const SignupPage = () => {
               />
             </div>
             <div>
-              <label>Name:</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                placeholder="Enter your name"
-              />
-            </div>
-            <div>
               <label>Password:</label>
               <input
                 type="password"
