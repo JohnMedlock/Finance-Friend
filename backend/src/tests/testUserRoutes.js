@@ -1,4 +1,5 @@
 import axios from 'axios';
+import e from 'express';
 
 // URL of the running API
 const API_URL = 'http://localhost:3000/api/users';
@@ -124,24 +125,19 @@ const deleteUser = async () => {
 };
 
 // Create a chart container
+/*
 const createChartContainer = async () => {
   try {
-    const response = await axios.post(`${API_URL}/charts/add`, { 
-      email: 'john@example.com', 
-      chart1: {
-        value1: 2, 
-        value2: 4
-      },
-      chart2: "c2",
-      chart3: "c3",
-      chart4: "c4"
-    });
+    const response = await axios.post(`${API_URL}/charts/add`, {
+        email: 'john@example.com',
+      });
     console.log('Model chart container:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error adding chart container:', error.response?.data || error.message);
   } // try
 } // createModel
+
 
 // Update a chart container by email
 const updateChartContainer = async () => {  
@@ -175,7 +171,7 @@ const getChartContainer = async () => {
     console.error('Error retrieving chart container:', error.response?.data || error.message);
   } // try
 } // getModel
-
+*/
 // Run the functions to test the API routes
 (async () => {
     await register('John Doe', 'john@example.com', 'password123', 'picture.com');
@@ -192,13 +188,13 @@ const getChartContainer = async () => {
 
     console.log("==================================================================================")
     
-    //await createChartContainer();
-    //await getChartContainer();
+    await createChartContainer();
+    await getChartContainer();
     //await updateChartContainer();
     //await getChartContainer();
 
     console.log("==================================================================================")
 
     // await updateUser();
-    // await deleteUser();
+    await deleteUser();
 })();

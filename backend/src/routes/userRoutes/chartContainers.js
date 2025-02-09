@@ -6,30 +6,24 @@ const router = express.Router()
   
 router.post('/add', async (req, res) => {
     try {
-        const { email, balanceOverTimePoints, spendingCategories, spending, income } = req.body;
+        const { email, accountBalanceOverTime, spendingCategories } = req.body;
         const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(404).json({ message: "No user found." });
         } // if
-
+        
+        
         const uid = user._id;
+
         const newContainer = new ChartContainer({
             userId: uid,
-            balanceOverTime: {
-                balanceOverTimePoints: balanceOverTimePoints
-            },
-            spendingSectors: {
-                spendingCategories: spendingCategories
-            },
-            incomeAndSpending: {
-                spending: spending,
-                income: income
-            }
+            accountBalanceOverTime: accountBalanceOverTime,
+            spendingCategories: spendingCategories,
         });
 
         await newContainer.save();
-
+        
         res.status(201).json(newContainer);
     } catch (error) {
         res.status(500).json({ message: error });
