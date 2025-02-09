@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const chartContainerSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   accountBalanceOverTime: [
     {
       date: { type: String, required: true },
@@ -16,6 +16,8 @@ const chartContainerSchema = new mongoose.Schema({
   ],
   timestamp: { type: Date, default: Date.now },
 });
-  
+
+chartContainerSchema.index({ userId: 1, timestamp: -1 });
+
 const ChartContainer = mongoose.model('ChartContainer', chartContainerSchema);
 export default ChartContainer;
