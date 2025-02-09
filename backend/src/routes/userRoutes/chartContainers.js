@@ -53,20 +53,19 @@ router.get('/get', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     try {
-        const { email, balanceOverTimePoints, spendingCategories, spending, income } = req.body;
+        const { email, accountBalanceOverTime, spendingCategories } = req.body;
         const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(404).json({ message: "No user found." });
         } // if
 
-        const updatedContainer = await ChartContainer.findOneAndUpdate(
+        const updatedContainer = new ChartContainer.findOneAndUpdate(
             { userId: user._id },
-            { 
+            {
                 $set: {
-                    balanceOverTime: { balanceOverTimePoints },
-                    spendingSectors: { spendingCategories },
-                    incomeAndSpending: { spending, income }
+                    accountBalanceOverTime: accountBalanceOverTime,
+                    spendingCategories: spendingCategories
                 }
             },
             { new: true, runValidators: true }
