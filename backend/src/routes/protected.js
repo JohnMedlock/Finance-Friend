@@ -7,6 +7,10 @@ import chat from '../services/chatbot.js';
 
 const router = express.Router();
 
+router.get('/', (req, res) => {
+  res.json({ message: 'This is a protected route.', user: req.user });
+});
+
 router.use('/users', userRoutes);
 
 router.get('/textTo3D', async (req, res) => {

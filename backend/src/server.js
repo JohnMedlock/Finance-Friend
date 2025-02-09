@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import publicRoutes from './routes/public.js';
 import protectedRoutes from './routes/protected.js';
-import userRoutes from './routes/users.js';
 import { authenticateToken } from './auth/middleware.js';
 
 dotenv.config();
