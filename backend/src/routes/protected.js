@@ -157,7 +157,7 @@ router.post('/update-profile', upload.single('file'), async (req, res) => {
   }
 });
 
-router.get('/download', async (req, res) => {
+router.post('/download', async (req, res) => {
   try {
     const email = req.body.email;
     const modelName = req.body.modelName;

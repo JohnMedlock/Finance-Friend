@@ -211,3 +211,63 @@
 .messages::-webkit-scrollbar-thumb:hover {
   background: var(--primary-dark);
 }
+
+.arrow {
+  border: solid #5f259f;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  margin-left: 5px;
+  margin-bottom: 2px;
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.chat-with-character-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ai-character-name-title {
+  position: relative;
+  margin-bottom: var(--spacing-md);
+  display: inline-block;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  color: #5f259f;
+  font-size: larger;
+  width: auto;
+}
+
+/* The pseudo-element that draws the curved underline */
+.ai-character-name-title::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  width: 90%;
+  height: 2.5px; /* Underline thickness */
+  background-color: currentColor; /* Match text color */
+  border-radius: 9999px; /* Curved corners */
+  pointer-events: none;
+  transform: translateY(100%);
+}
+
+/* Style the <select> as “plain text” */
+.ai-character-name-title select {
+  font: inherit;            /* Inherit font settings from parent */
+  color: inherit;           /* Inherit text color */
+  border: none;             /* Remove default border */
+  background: transparent;  /* Remove default background */
+  outline: none;            /* Remove focus outline (use your own if needed) */
+  appearance: none;         /* Remove default browser arrow (Chrome, Safari) */
+  -moz-appearance: none;    /* Remove default arrow (Firefox) */
+  -webkit-appearance: none; /* Remove default arrow (Safari, etc.) */
+  cursor: pointer;
+}
+
+

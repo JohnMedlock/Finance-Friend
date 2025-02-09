@@ -3,20 +3,56 @@ import { Profile3D } from './Profile3D';
 import './Sidebar.css';
 import paperclip from '../assets/paperclip.png';
 
-const aiCharacter = localStorage.getItem('selectedCharacter');
+const API_URL = 'http://localhost:3000/api';
 
 const Sidebar = () => {
+  const [aiCharacter, setAiCharacter] = useState('');
+  const [characters, setCharacters] = useState([]);
+  const [glbModel, setGlbModel] = useState('');
   const [messages, setMessages] = useState([
     { id: 1, user: aiCharacter, text: 'Hello! How can I help you today?' },
   ]);
   const [inputMessage, setInputMessage] = useState('');
+  
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const fetchUserData = async () => {
+    try {
+      const email = localStorage.getItem('email');
+      const token = localStorage.getItem('token');
+
+      if (!email) {
+        console.error('Email is not set in localStorage');
+        return;
+      }
+
+      fetch(`${API_URL}/users/models/getModelsByUser/` + email, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }).then(response => {
+        if (response.ok) {
+          return response.json(); // Return the promise here
+        }
+        throw new Error('Failed to fetch user data');
+      })
+      .then(parsedData => {
+        setCharacters(parsedData);
+      });
+    } catch (error) {
+      console.error('Error fetching data:', error.response?.data || error);
+    }
+  };
+
   useEffect(() => {
+    fetchUserData();
+    setAiCharacter(localStorage.getItem('selectedCharacter'));
+    setGlbModel(localStorage.getItem('selectedCharacter'));
     scrollToBottom();
   }, [messages]);
 
@@ -37,6 +73,36 @@ const Sidebar = () => {
 
     if (input) {
       const formData = new FormData();
+        formData.append('prompt', input);
+        formData.append('Name', aiCharacter);
+    
+        fetch(`${API_URL}/chat`, { 
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          }
+        })
+          .then(response => {
+            if (response.ok) {
+              return response.json(); // Return the promise here
+            } else {
+              throw new Error('Message upload failed');
+            }
+          })
+          .then(parsedData => {
+            console.log('Message uploaded successfully');
+            console.log('Parsed data:', parsedData);
+            
+            setMessages(prevMessages => [
+              ...prevMessages, 
+              { id: prevMessages.length + 1, user: aiCharacter, text: parsedData.response }
+            ]);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        
       formData.append('prompt', input);
       formData.append('Name', aiCharacter);
 
@@ -80,6 +146,37 @@ const Sidebar = () => {
 
     if (input) {
       const formData = new FormData();
+        formData.append('file', input);
+        formData.append('name', 'Snoop Dogg');
+    
+        fetch(`${API_URL}/parse-bank-statement`, { 
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          }
+        })
+          .then(response => {
+            if (response.ok) {
+              return response.json(); // Return the promise here
+            } else {
+              throw new Error('File upload failed');
+            }
+          })
+          .then(parsedData => {
+            console.log('File uploaded successfully');
+            console.log('Parsed data:', parsedData);
+            
+            setMessages(prevMessages => [
+              ...prevMessages, 
+              { id: prevMessages.length + 1, user: aiCharacter, text: parsedData.commentary }
+            ]);
+            sendParsedDataToServer(parsedData.parsedData);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        
       formData.append('file', input);
       formData.append('name', 'Snoop Dogg');
 
@@ -116,21 +213,65 @@ const Sidebar = () => {
     }
   };
 
+  const handleSelectCharacter = (char) => {
+    localStorage.setItem('selectedCharacter', char);
+    localStorage.setItem('modelName', char);
+    setAiCharacter(char);
+  }
+
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      //handleSendMessage(e);
+      handleSendMessage(e);
     }
   };
+
+  async function sendParsedDataToServer(parsedData) {
+    // Build the request body so it matches what your endpoint is expecting:
+    const requestBody = {
+      email: localStorage.getItem('email'),
+      accountBalanceOverTime: parsedData.accountBalanceOverTime,
+      spendingCategories: parsedData.spendingCategories,
+      spending: 0, // or any value/array you have for total spending
+      income: 0    // or any value/array you have for total income
+    };
+  
+    try {
+      const response = await fetch(`${API_URL}/users/charts/add`, {
+        method: 'POST',
+        headers: { 
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      });
+      const data = await response.json();
+      console.log('Success:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
   return (
     <div className="sidebar">
       <div className="picture">
-        <Profile3D />
+        <Profile3D modelName={aiCharacter}/>
       </div>
 
       <div className="chat-log">
-        <h2>Chat with {aiCharacter}</h2>
+        <div className="chat-with-character-title">
+          <h2>Chat with&nbsp;</h2>
+          <div className="ai-character-name-title">
+          <select onChange={(e) => handleSelectCharacter(e.target.value)} value={aiCharacter}>
+            {characters.map((character) => (
+              <option key={character.id} value={character.modelName}>
+                {character.modelName}
+              </option>
+            ))}
+          </select>
+            <i className="arrow down"></i>
+          </div>
+        </div>
         <div className="messages">
           {messages.map((message) => (
             <div
