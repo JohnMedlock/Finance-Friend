@@ -1,7 +1,7 @@
 import express from 'express'
 import User from '../../schemas/User.js'
-import modelRouter from './models.js'
 import chartContainerRouter from './chartContainers.js'
+import modelRouter from './models.js'
 
 const router = express.Router()
 
