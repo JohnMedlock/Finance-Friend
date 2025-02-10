@@ -49,7 +49,7 @@
   </tr>
 </table>
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js (v14+)
