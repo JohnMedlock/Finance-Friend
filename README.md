@@ -88,7 +88,7 @@ OPENAI_API_KEY=your_openai_api_key
 | Dylan Carter | Backend | [@dylanwcarter](https://github.com/dylancarter) |
 | Rishab Seshadri | Backend | [@RishabSeshadri](https://github.com/rishabseshadri) |
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
