@@ -83,10 +83,10 @@ OPENAI_API_KEY=your_openai_api_key
 
 | Name | Role | GitHub |
 |------|------|--------|
-| Grant Moore | Frontend | [@jgrantmoore](https://github.com/grantmoore) |
+| Grant Moore | Frontend | [@jgrantmoore](https://github.com/jgrantmoore) |
 | John Medlock | Frontend | [@JohnMedlock](https://github.com/JohnMedlock) |
-| Dylan Carter | Backend | [@dylanwcarter](https://github.com/dylancarter) |
-| Rishab Seshadri | Backend | [@RishabSeshadri](https://github.com/rishabseshadri) |
+| Dylan Carter | Backend | [@dylanwcarter](https://github.com/dylanwcarter) |
+| Rishab Seshadri | Backend | [@RishabSeshadri](https://github.com/RishabSeshadri) |
 
 ## License
 
